@@ -2,3 +2,7 @@ name = "aichat-proxy"
 main = "index.js"
 compatibility_date = "2026-09-01"
 keep_vars = true
+
+[[kv_namespaces]]
+binding = "Q"
+id = "bf9373609ed74de5b4cbbb548107e60f"
