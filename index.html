@@ -4309,7 +4309,30 @@ syncCredit();
 document.addEventListener('visibilitychange', () => { if(!document.hidden) syncCredit(); });
 
 if('serviceWorker' in navigator){
-  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  /* وقتی نسخه جدید فعال شد، صفحه یک‌بار خودکار تازه شود */
+  let _reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if(_reloaded) return; _reloaded = true; location.reload();
+  });
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').then(reg => {
+      /* اگر نسخه تازه‌ای منتظر بود، فوراً جایگزین کن */
+      if(reg.waiting) reg.waiting.postMessage('skipWaiting');
+      reg.addEventListener('updatefound', () => {
+        const nw = reg.installing; if(!nw) return;
+        nw.addEventListener('statechange', () => {
+          if(nw.state === 'installed' && navigator.serviceWorker.controller){
+            nw.postMessage('skipWaiting');
+          }
+        });
+      });
+      /* هر بار بازگشت به اپ، وجود نسخه جدید بررسی شود */
+      reg.update().catch(()=>{});
+      document.addEventListener('visibilitychange', () => {
+        if(!document.hidden) reg.update().catch(()=>{});
+      });
+    }).catch(()=>{});
+  });
 }
 let _prompt = null;
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); _prompt = e; showInstall(); });
