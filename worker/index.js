@@ -1,4 +1,5 @@
-const OK=['*'];const CAP=900,IP_DAY=25,DEV_DAY=25,IP_MIN=8,GAP=1200,RPM=15,NEWMAX=60;
+/* دامنه سایت + اپ اندروید (TWA بدون Origin یا با android-app://) */
+const OK=['https://aichat-app-53x.pages.dev','android-app://com.aura.app',''];const CAP=900,IP_DAY=25,DEV_DAY=25,IP_MIN=8,GAP=1200,RPM=15,NEWMAX=60;
 const GM=['gemini-3.5-flash','gemini-3.5-flash-lite','gemini-3.8-flash'];
 const GQ=['openai/gpt-oss-120b','qwen/qwen3.8-27b'];
 const CF=['@cf/openai/gpt-oss-120b','@cf/meta/llama-3.1-8b-instruct-fp8-fast'];
