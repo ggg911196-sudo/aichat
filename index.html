@@ -330,6 +330,9 @@
   /* ===== کادر ورودی ===== */
   #bar{flex:0 0 auto;display:none;gap:7px;padding:10px 12px;background:var(--bg2);
     border-top:1px solid var(--line);align-items:flex-end}
+  /* داخل چت نوار پایین نداریم، پس خودِ نوار ورودی فاصله ایمن بگیرد */
+  body.in-chat #bar{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  body.in-chat.sheet-on #bar{padding-bottom:10px}
   .rbtn{flex:0 0 auto;width:40px;height:46px;background:none;border:none;color:var(--dim);
     cursor:pointer;display:grid;place-items:center;padding:0}
   .rbtn svg{width:22px;height:22px}
@@ -526,6 +529,9 @@
   .credit:active{background:var(--btn2)}
   body.in-chat .top .themebtn{display:none}
   body.in-chat .top #setBtn{display:none}
+  /* داخل چت: نوار پایین و دکمه Pro حذف شوند تا تمرکز روی گفتگو باشد */
+  body.in-chat nav{display:none}
+  body.in-chat .top .sparkbtn{display:none}
   /* روی صفحه‌های خیلی باریک، دکمه‌های کم‌کاربرد پنهان شوند */
   @media (max-width:360px){
     .top{gap:3px;padding-inline:9px}
