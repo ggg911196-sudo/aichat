@@ -10,9 +10,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Nova AI">
+<meta name="apple-mobile-web-app-title" content="Aura">
 <meta name="description" content="دستیار هوش مصنوعی فارسی با ده‌ها ابزار تخصصی">
-<title>Nova AI</title>
+<title>Aura</title>
 <style>
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{height:100%;margin:0;overscroll-behavior:none}
@@ -852,7 +852,7 @@
 
 <div class="top">
   <button class="iconbtn back" id="backBtn" onclick="go('home')" aria-label="بازگشت"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
-  <div class="brand" id="title">Nova AI</div>
+  <div class="brand" id="title">Aura</div>
   <button class="mdlbtn" id="mdlbtn" onclick="openModels()" aria-label="انتخاب مدل">
     <span class="dt" id="mdldot"></span><b id="mdlname">Auto</b>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -2119,7 +2119,7 @@ async function shareChat(){
   if(!history.length){ toast(T('noChat')); return; }
   const txt = chatText();
   try{
-    if(navigator.share){ await navigator.share({title:'Nova AI', text:txt}); return; }
+    if(navigator.share){ await navigator.share({title:'Aura', text:txt}); return; }
     await navigator.clipboard.writeText(txt); toast(T('copied'));
   }catch(e){}
 }
@@ -2478,7 +2478,7 @@ function applyBubble(){
 const I18N = {
   fa:{
     explore:'کاوش کنید', store:'فروشگاه', chat:'چت', hist:'تاریخچه', pro:'نسخه Pro',
-    settings:'تنظیمات', appname:'Nova AI',
+    settings:'تنظیمات', appname:'Aura',
     exploreT:'کاوش کنید', startChat:'شروع گفتگو', freeChat:'چت آزاد ›',
     moreTools:'ابزار بیشتر', seeAll:'مشاهده همه ›', storeTitle:'فروشگاه هوش مصنوعی',
     searchPh:'جستجوی ابزار یا متخصص...', results:'نتایج', myTools:'ابزارهای من',
@@ -2539,7 +2539,7 @@ const I18N = {
   },
   en:{
     explore:'Explore', store:'Store', chat:'Chat', hist:'History', pro:'Pro',
-    settings:'Settings', appname:'Nova AI',
+    settings:'Settings', appname:'Aura',
     exploreT:'Explore', startChat:'Start a chat', freeChat:'Free chat ›',
     moreTools:'More tools', seeAll:'See all ›', storeTitle:'AI Store',
     searchPh:'Search tools or experts...', results:'Results', myTools:'My tools',
@@ -2600,7 +2600,7 @@ const I18N = {
   },
   ar:{
     explore:'استكشف', store:'المتجر', chat:'محادثة', hist:'السجل', pro:'النسخة Pro',
-    settings:'الإعدادات', appname:'Nova AI',
+    settings:'الإعدادات', appname:'Aura',
     exploreT:'استكشف', startChat:'ابدأ محادثة', freeChat:'محادثة حرة ›',
     moreTools:'أدوات أخرى', seeAll:'عرض الكل ›', storeTitle:'متجر الذكاء الاصطناعي',
     searchPh:'ابحث عن أداة أو خبير...', results:'النتائج', myTools:'أدواتي',
@@ -2661,7 +2661,7 @@ const I18N = {
   },
   tr:{
     explore:'Keşfet', store:'Mağaza', chat:'Sohbet', hist:'Geçmiş', pro:'Pro',
-    settings:'Ayarlar', appname:'Nova AI',
+    settings:'Ayarlar', appname:'Aura',
     exploreT:'Keşfet', startChat:'Sohbete başla', freeChat:'Serbest sohbet ›',
     moreTools:'Daha fazla araç', seeAll:'Tümünü gör ›', storeTitle:'Yapay Zekâ Mağazası',
     searchPh:'Araç veya uzman ara...', results:'Sonuçlar', myTools:'Araçlarım',
@@ -3088,7 +3088,7 @@ function clearAll(){
 }
 
 /* ================= ناوبری ================= */
-const TITLES = {home:'Nova AI', tools:'فروشگاه', chat:'چت', hist:'تاریخچه', pro:'نسخه Pro', set:'تنظیمات'};
+const TITLES = {home:'Aura', tools:'فروشگاه', chat:'چت', hist:'تاریخچه', pro:'نسخه Pro', set:'تنظیمات'};
 let screen = 'home';
 
 function go(s){
