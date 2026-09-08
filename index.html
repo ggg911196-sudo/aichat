@@ -76,18 +76,21 @@
 
   /* ===== نوار بالا ===== */
   .top{
-    display:flex;align-items:center;gap:10px;padding:13px 16px;
-    padding-top:calc(13px + env(safe-area-inset-top));
+    display:flex;align-items:center;gap:5px;padding:7px 12px;
+    padding-top:calc(7px + env(safe-area-inset-top));
     background:var(--bg2);border-bottom:1px solid var(--line);flex:0 0 auto;z-index:5;
   }
-  .top .brand{font-size:19px;font-weight:800;letter-spacing:.4px;flex:1;
+  .top .brand{font-size:15.5px;font-weight:800;letter-spacing:.2px;flex:1;min-width:0;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     background:var(--brandg);-webkit-background-clip:text;background-clip:text;
     color:transparent}
   .pro{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--onacc);
     font-weight:800;font-size:12px;padding:6px 13px;border-radius:20px;border:none}
-  .iconbtn{background:var(--btn);border:none;color:var(--fg2);width:38px;height:38px;
-    border-radius:12px;font-size:17px;cursor:pointer;display:grid;place-items:center}
-  .iconbtn:active{background:var(--btn2)}
+  .iconbtn{background:none;border:none;color:var(--fg2);width:32px;height:32px;
+    border-radius:10px;font-size:17px;cursor:pointer;display:grid;place-items:center;
+    flex:0 0 auto;transition:background .15s}
+  .iconbtn svg{width:17px;height:17px}
+  .iconbtn:active{background:var(--btn2);transform:scale(.9)}
   .back{display:none}
 
   /* ===== بدنه ===== */
@@ -453,10 +456,11 @@
 
 
   /* ===== کردیت و بنر ===== */
-  .credit{position:relative;display:none;align-items:center;gap:5px;
-    background:var(--btn);border:none;border-radius:20px;padding:7px 11px 8px;
-    color:var(--accent);font:inherit;font-weight:800;font-size:12px;cursor:pointer;
+  .credit{position:relative;display:none;align-items:center;gap:4px;flex:0 0 auto;
+    background:var(--btn);border:none;border-radius:16px;padding:5px 9px 6px;
+    color:var(--accent);font:inherit;font-weight:800;font-size:11px;cursor:pointer;
     overflow:hidden}
+  .credit svg{width:12px;height:12px}
   .credit b{font-weight:800;letter-spacing:.2px}
   .credit i{position:absolute;bottom:0;inset-inline-start:0;height:2.5px;
     background:var(--accent);transition:width .3s}
@@ -464,6 +468,13 @@
   .credit.low i{background:#ffb454}
   .credit:active{background:var(--btn2)}
   body.in-chat .top .themebtn{display:none}
+  body.in-chat .top #setBtn{display:none}
+  /* روی صفحه‌های خیلی باریک، دکمه‌های کم‌کاربرد پنهان شوند */
+  @media (max-width:360px){
+    .top{gap:3px;padding-inline:9px}
+    .top .brand{font-size:14.5px}
+    .top .themebtn{display:none}
+  }
   body.in-chat .top .brand{font-size:15px;line-height:1.4;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
@@ -667,10 +678,11 @@
   .empty .big{font-size:46px;display:block;margin-bottom:12px;opacity:.5}
 
   /* ===== [جدید] نوار بالا سبک اپ ===== */
-  .sparkbtn{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;
+  .sparkbtn{flex:0 0 auto;width:33px;height:33px;border-radius:50%;border:none;cursor:pointer;
     display:grid;place-items:center;color:#fff;
     background:linear-gradient(135deg,var(--accent),var(--accent2));
-    box-shadow:0 4px 14px rgba(18,217,154,.35)}
+    box-shadow:0 3px 10px rgba(18,217,154,.32)}
+  .sparkbtn svg{width:17px;height:17px}
   .sparkbtn:active{transform:scale(.93)}
 
   /* ===== [جدید] صفحه تنظیمات کاربر ===== */
@@ -848,11 +860,11 @@
     <div id="contact"></div>
 
     <div class="actbox">
-      <h3>کد فعال‌سازی دارید؟</h3>
+      <h3 data-i18n="proCode">کد فعال‌سازی دارید؟</h3>
       <p>اگر خرید کرده‌اید، کدی که دریافت کردید را اینجا وارد کنید.</p>
       <div class="actrow">
         <input id="code" placeholder="مثال: VIP-1MAH-2026" autocomplete="off" spellcheck="false">
-        <button onclick="activate()">فعال‌سازی</button>
+        <button onclick="activate()" data-i18n="proActivate">فعال‌سازی</button>
       </div>
       <div id="licmsg"></div>
     </div>
@@ -1026,7 +1038,7 @@
       <option value="custom">سازگار با OpenAI (آدرس دلخواه)</option>
     </select>
 
-    <label>کلید API</label>
+    <label data-i18n="apiKey">کلید API</label>
     <input id="apikey" type="password" placeholder="gsk_... / sk-... / AIza...">
 
     <label>مدل</label>
@@ -1039,7 +1051,7 @@
             onchange="$('model').value=this.value"></select>
     <small id="modelhint" style="display:none">مدل‌ها از قوی به ضعیف مرتب شده‌اند. برای فارسی خوب از بالای لیست انتخاب کنید و از مدل‌های 8b / mini / instant پرهیز کنید.</small>
 
-    <label id="urlLbl" style="display:none">آدرس Base URL</label>
+    <label id="urlLbl" style="display:none" data-i18n="baseUrl">آدرس Base URL</label>
     <input id="baseurl" style="display:none" placeholder="https://example.com/v1">
 
     <label>دستور سیستمی (شخصیت ربات)</label>
@@ -1049,8 +1061,8 @@
          border-radius:11px;font-size:13px;line-height:1.9"></div>
 
     <div class="row">
-      <button class="btn ghost" onclick="closeCfg()">انصراف</button>
-      <button class="btn ghost" onclick="testCfg()">🔍 تست</button>
+      <button class="btn ghost" onclick="closeCfg()" data-i18n="cancel">انصراف</button>
+      <button class="btn ghost" onclick="testCfg()" data-i18n="test">🔍 تست</button>
       <button class="btn primary" onclick="saveCfg()">ذخیره</button>
     </div>
 
@@ -1556,16 +1568,16 @@ function tileHTML(t){
     '<div class="art"' + (TPHOTO[t.id] ? ' style="background-image:url(' + TPHOTO[t.id] + ')"' : '') + '>' +
       (TPHOTO[t.id] ? '' : paintArt(t.id) + toolArt(t)) +
       '<div class="glyph">' + (TPHOTO[t.id] ? '' : svgIcon(t.id, 40, 2.2)) + '</div>' +
-      '<span class="badge">' + t.cat + '</span>' +
+      '<span class="badge">' + catT(t.cat) + '</span>' +
     '</div>' +
-    '<div class="tx"><h3>' + t.t + '</h3><p>' + t.d + '</p></div></div>';
+    '<div class="tx"><h3>' + toolT(t) + '</h3><p>' + toolD(t) + '</p></div></div>';
 }
 function cellHTML(t){
   return '<div class="cell" onclick="startTool(\'' + t.id + '\')">' +
     '<div class="ic">' + paintArt(t.id) + toolArt(t) +
       '<span class="gl">' + svgIcon(t.id, 26, 2.2) + '</span>' +
     '</div>' +
-    '<h4>' + t.t + '</h4><span>' + t.d + '</span></div>';
+    '<h4>' + toolT(t) + '</h4><span>' + toolD(t) + '</span></div>';
 }
 
 /* ===== تصاویر واقعی کارت‌های ابزار ===== */
@@ -1623,7 +1635,8 @@ function buildHome(){
   $('rail').innerHTML = FEATURED.map(id => tileHTML(TOOLS.find(x=>x.id===id))).join('');
   $('grid').innerHTML = TOOLS.slice(0,6).map(cellHTML).join('');
   $('cats').innerHTML = CATS.map((c,k) =>
-    '<button class="chip' + (k===0?' on':'') + '" onclick="filterCat(\'' + c + '\')">' + c + '</button>').join('');
+    '<button class="chip' + (c===curCat?' on':'') + '" data-c="' + c + '" onclick="filterCat(\'' + c + '\')">' +
+    (c==='همه' ? T('allTools') : catT(c)) + '</button>').join('');
   renderTools();
 }
 
@@ -1631,7 +1644,7 @@ let curCat = 'همه', q = '';
 function filterCat(c){
   curCat = c;
   document.querySelectorAll('#cats .chip').forEach(b =>
-    b.classList.toggle('on', b.textContent === c));
+    b.classList.toggle('on', b.dataset.c === c));
   renderTools();
 }
 function searchTools(v){ q = v.trim().toLowerCase(); renderTools(); }
@@ -1645,7 +1658,7 @@ function renderTools(){
 
   let list = TOOLS.filter(t => curCat === 'همه' || t.cat === curCat);
   if(q) list = list.filter(t =>
-    (t.t + ' ' + t.d + ' ' + t.cat).toLowerCase().includes(q));
+    (t.t+' '+t.d+' '+t.cat+' '+toolT(t)+' '+toolD(t)+' '+catT(t.cat)).toLowerCase().includes(q));
   $('allgrid').innerHTML = list.length
     ? list.map(cellHTML).join('')
     : '<div class="empty" style="grid-column:1/-1"><span class="big">🔍</span>ابزاری پیدا نشد.</div>';
@@ -1718,7 +1731,7 @@ function buildStore(){
     fav.map(t =>
       '<div class="mi" onclick="startTool(\'' + t.id + '\')">' +
         '<span class="mic" style="background:' + t.g + '">' + svgIcon(t.id, 22, 2.2) + '</span>' +
-        '<b>' + t.t + '</b></div>').join('');
+        '<b>' + toolT(t) + '</b></div>').join('');
 
   /* متخصص‌ها — دو ستون افقی */
   const col = (arr) => '<div class="ecol">' + arr.map(e =>
@@ -1970,7 +1983,7 @@ function buildPro(){
   if(isPro()){
     const el = document.createElement('div');
     el.className = 'prostatus';
-    el.innerHTML = '<b>✓ اشتراک شما فعال است</b><span>' +
+    el.innerHTML = '<b>'+T('proActive')+'</b><span>' +
                    proDaysLeft() + ' روز باقی مانده</span>';
     $('s-pro').insertBefore(el, $('plans'));
   }
@@ -2119,7 +2132,30 @@ const I18N = {
     close:'بستن', cancel:'انصراف', save:'ذخیره',
     voice:'صدا', scan:'اسکن کنید', album:'آلبوم', pdf:'فایل PDF', camera:'دوربین',
     hello:'سلام! 👋 هر سوالی داری بپرس.', msgs:'پیام',
-    bubDefault:'پیش‌فرض', bubSoft:'کاملاً گرد', bubSquare:'گوشه‌دار', bubLine:'خطی'
+    bubDefault:'پیش‌فرض', bubSoft:'کاملاً گرد', bubSquare:'گوشه‌دار', bubLine:'خطی',
+    allTools:'همه',
+    proTitle:'نسخه Pro', proCode:'کد فعال‌سازی دارید؟',
+    proCodeD:'اگر خرید کرده‌اید، کدی که دریافت کردید را اینجا وارد کنید.',
+    proActivate:'فعال‌سازی', proAfter:'پس از پرداخت، کد فعال‌سازی از طریق تلگرام برای شما ارسال می‌شود.',
+    proActive:'✓ اشتراک شما فعال است',
+    creditTitle:'⚡ کردیت شما', apiKey:'کلید API', model:'مدل',
+    modelHint:'مدل‌ها از قوی به ضعیف مرتب شده‌اند. برای فارسی خوب از بالای لیست انتخاب کنید.',
+    baseUrl:'آدرس Base URL', sysPrompt:'دستور سیستمی (شخصیت ربات)',
+    test:'🔍 تست', keyLocal:'کلید فقط روی همین دستگاه ذخیره می‌شود.',
+    recommended:'رایگان و پیشنهادی',
+    copy:'کپی', copied:'✓ کپی شد', install:'📲 این اپ را روی صفحه خانگی نصب کنید',
+    installBtn:'نصب',
+    histCleared:'تاریخچه پاک شد.', confirmClear:'همه گفتگوهای ذخیره‌شده پاک شوند؟',
+    confirmWipe:'همه داده‌های محلی (تاریخچه و تنظیمات) پاک شود؟\n\nتوجه: سهمیه امروز شما برنمی‌گردد.',
+    noCredit:'⏳ کردیت امروز کافی نیست.',
+    micOff:'مرورگر شما ضبط صدا را پشتیبانی نمی‌کند.',
+    micDenied:'دسترسی به میکروفون داده نشد. در تنظیمات مرورگر/اپ اجازه میکروفون را فعال کنید.',
+    micNothing:'چیزی شنیده نشد. دوباره تلاش کنید.',
+    sttWait:'⏳ در حال تبدیل گفتار به متن...',
+    imgOnly:'فقط فایل تصویری مجاز است.', fileBig:'حجم فایل نباید بیشتر از ۱۰ مگابایت باشد.',
+    nextQ:'سوالات بعدی', thinking:'در حال فکر کردن…',
+    catGeneral:'عمومی', catLearn:'یادگیری', catWork:'کار', catCreative:'خلاقیت',
+    catLife:'زندگی', catCode:'برنامه‌نویسی'
   },
   en:{
     explore:'Explore', store:'Store', chat:'Chat', hist:'History', pro:'Pro',
@@ -2138,7 +2174,30 @@ const I18N = {
     close:'Close', cancel:'Cancel', save:'Save',
     voice:'Voice', scan:'Scan', album:'Album', pdf:'PDF file', camera:'Camera',
     hello:'Hi! 👋 Ask me anything.', msgs:'messages',
-    bubDefault:'Default', bubSoft:'Rounded', bubSquare:'Square', bubLine:'Outline'
+    bubDefault:'Default', bubSoft:'Rounded', bubSquare:'Square', bubLine:'Outline',
+    allTools:'All',
+    proTitle:'Pro version', proCode:'Have an activation code?',
+    proCodeD:'If you purchased, enter the code you received here.',
+    proActivate:'Activate', proAfter:'After payment, your activation code will be sent via Telegram.',
+    proActive:'✓ Your subscription is active',
+    creditTitle:'⚡ Your credits', apiKey:'API key', model:'Model',
+    modelHint:'Models are sorted strongest to weakest. Pick from the top for best results.',
+    baseUrl:'Base URL', sysPrompt:'System prompt (bot personality)',
+    test:'🔍 Test', keyLocal:'The key is stored only on this device.',
+    recommended:'Free & recommended',
+    copy:'Copy', copied:'✓ Copied', install:'📲 Install this app on your home screen',
+    installBtn:'Install',
+    histCleared:'History cleared.', confirmClear:'Delete all saved conversations?',
+    confirmWipe:'Erase all local data (history and settings)?\n\nNote: today\'s quota will not reset.',
+    noCredit:'⏳ Not enough credits today.',
+    micOff:'Your browser does not support audio recording.',
+    micDenied:'Microphone access denied. Enable it in your browser/app settings.',
+    micNothing:'Nothing was heard. Please try again.',
+    sttWait:'⏳ Transcribing…',
+    imgOnly:'Only image files are allowed.', fileBig:'File must be smaller than 10 MB.',
+    nextQ:'Follow-up questions', thinking:'Thinking…',
+    catGeneral:'General', catLearn:'Learning', catWork:'Work', catCreative:'Creativity',
+    catLife:'Life', catCode:'Coding'
   },
   ar:{
     explore:'استكشف', store:'المتجر', chat:'محادثة', hist:'السجل', pro:'النسخة Pro',
@@ -2157,7 +2216,30 @@ const I18N = {
     close:'إغلاق', cancel:'إلغاء', save:'حفظ',
     voice:'صوت', scan:'مسح', album:'الألبوم', pdf:'ملف PDF', camera:'الكاميرا',
     hello:'مرحباً! 👋 اسألني أي شيء.', msgs:'رسالة',
-    bubDefault:'افتراضي', bubSoft:'دائري', bubSquare:'مربع', bubLine:'خطي'
+    bubDefault:'افتراضي', bubSoft:'دائري', bubSquare:'مربع', bubLine:'خطي',
+    allTools:'الكل',
+    proTitle:'النسخة Pro', proCode:'هل لديك رمز تفعيل؟',
+    proCodeD:'إذا كنت قد اشتريت، أدخل الرمز الذي استلمته هنا.',
+    proActivate:'تفعيل', proAfter:'بعد الدفع، سيتم إرسال رمز التفعيل عبر تيليجرام.',
+    proActive:'✓ اشتراكك فعّال',
+    creditTitle:'⚡ رصيدك', apiKey:'مفتاح API', model:'النموذج',
+    modelHint:'النماذج مرتبة من الأقوى إلى الأضعف. اختر من الأعلى للحصول على أفضل نتيجة.',
+    baseUrl:'عنوان Base URL', sysPrompt:'التعليمات النظامية (شخصية البوت)',
+    test:'🔍 اختبار', keyLocal:'يُحفظ المفتاح على هذا الجهاز فقط.',
+    recommended:'مجاني وموصى به',
+    copy:'نسخ', copied:'✓ تم النسخ', install:'📲 ثبّت هذا التطبيق على شاشتك الرئيسية',
+    installBtn:'تثبيت',
+    histCleared:'تم مسح السجل.', confirmClear:'حذف جميع المحادثات المحفوظة؟',
+    confirmWipe:'مسح كل البيانات المحلية (السجل والإعدادات)؟\n\nملاحظة: لن تُستعاد حصة اليوم.',
+    noCredit:'⏳ الرصيد غير كافٍ اليوم.',
+    micOff:'متصفحك لا يدعم تسجيل الصوت.',
+    micDenied:'تم رفض الوصول إلى الميكروفون. فعّله من إعدادات المتصفح/التطبيق.',
+    micNothing:'لم يُسمع شيء. حاول مرة أخرى.',
+    sttWait:'⏳ جارٍ التحويل إلى نص…',
+    imgOnly:'ملفات الصور فقط مسموحة.', fileBig:'يجب أن يكون حجم الملف أقل من ١٠ ميجابايت.',
+    nextQ:'أسئلة تالية', thinking:'يفكر…',
+    catGeneral:'عام', catLearn:'التعلّم', catWork:'العمل', catCreative:'الإبداع',
+    catLife:'الحياة', catCode:'البرمجة'
   },
   tr:{
     explore:'Keşfet', store:'Mağaza', chat:'Sohbet', hist:'Geçmiş', pro:'Pro',
@@ -2176,9 +2258,223 @@ const I18N = {
     close:'Kapat', cancel:'İptal', save:'Kaydet',
     voice:'Ses', scan:'Tara', album:'Albüm', pdf:'PDF dosyası', camera:'Kamera',
     hello:'Merhaba! 👋 Bana her şeyi sorabilirsin.', msgs:'mesaj',
-    bubDefault:'Varsayılan', bubSoft:'Yuvarlak', bubSquare:'Köşeli', bubLine:'Çizgili'
+    bubDefault:'Varsayılan', bubSoft:'Yuvarlak', bubSquare:'Köşeli', bubLine:'Çizgili',
+    allTools:'Tümü',
+    proTitle:'Pro sürüm', proCode:'Etkinleştirme kodunuz var mı?',
+    proCodeD:'Satın aldıysanız, aldığınız kodu buraya girin.',
+    proActivate:'Etkinleştir', proAfter:'Ödemeden sonra etkinleştirme kodu Telegram ile gönderilir.',
+    proActive:'✓ Aboneliğiniz aktif',
+    creditTitle:'⚡ Krediniz', apiKey:'API anahtarı', model:'Model',
+    modelHint:'Modeller güçlüden zayıfa sıralanmıştır. En iyi sonuç için üstten seçin.',
+    baseUrl:'Base URL adresi', sysPrompt:'Sistem komutu (bot kişiliği)',
+    test:'🔍 Test', keyLocal:'Anahtar yalnızca bu cihazda saklanır.',
+    recommended:'Ücretsiz ve önerilen',
+    copy:'Kopyala', copied:'✓ Kopyalandı', install:'📲 Bu uygulamayı ana ekranınıza ekleyin',
+    installBtn:'Yükle',
+    histCleared:'Geçmiş temizlendi.', confirmClear:'Kayıtlı tüm sohbetler silinsin mi?',
+    confirmWipe:'Tüm yerel veriler (geçmiş ve ayarlar) silinsin mi?\n\nNot: bugünkü kotanız geri gelmez.',
+    noCredit:'⏳ Bugünkü krediniz yetersiz.',
+    micOff:'Tarayıcınız ses kaydını desteklemiyor.',
+    micDenied:'Mikrofon erişimi reddedildi. Tarayıcı/uygulama ayarlarından izin verin.',
+    micNothing:'Hiçbir şey duyulmadı. Tekrar deneyin.',
+    sttWait:'⏳ Metne dönüştürülüyor…',
+    imgOnly:'Yalnızca resim dosyalarına izin verilir.', fileBig:'Dosya 10 MB’tan küçük olmalı.',
+    nextQ:'Sonraki sorular', thinking:'Düşünüyor…',
+    catGeneral:'Genel', catLearn:'Öğrenme', catWork:'İş', catCreative:'Yaratıcılık',
+    catLife:'Yaşam', catCode:'Kodlama'
   }
 };
+/* ترجمه نام و توضیح ابزارها */
+const TOOL_I18N = {
+  en:{
+    artist:['Image Creator','Generate images with AI'],
+    vision:['Image Analysis','Read and describe photos'],
+    tutor:['Private Tutor','Step-by-step lessons'],
+    math:['Math Solver','Algebra, geometry, calculus'],
+    physics:['Physics & Chemistry','Solve science problems'],
+    history:['History & Geography','Events and places'],
+    exam:['Exam Prep','Practice questions and review'],
+    flash:['Flashcards','Quick memorization cards'],
+    explain:['Explain Simply','Break down hard topics'],
+    write:['Writing Assistant','Any text, any style'],
+    email:['Email Writer','Professional emails'],
+    resume:['Resume & Cover Letter','Stand out to recruiters'],
+    story:['Storyteller','Fiction and scripts'],
+    poem:['Poetry','Verse in any style'],
+    blog:['Blog & Article','SEO-friendly content'],
+    edit:['Text Editor','Fix and polish writing'],
+    sum:['Summarizer','Long text into key points'],
+    rewrite:['Rewriter','Say it differently'],
+    biz:['Business Plan','Strategy and structure'],
+    market:['Marketing','Campaigns and copy'],
+    social:['Social Media','Posts and captions'],
+    pitch:['Pitch Deck','Convince investors'],
+    meeting:['Meeting Notes','Summaries and action items'],
+    legal:['Legal Assistant','Contracts and clauses'],
+    finance:['Finance','Budget and analysis'],
+    interview:['Interview Coach','Practice and feedback'],
+    code:['Programmer','Write code in any language'],
+    debug:['Debugger','Find and fix bugs'],
+    sql:['SQL Assistant','Queries and databases'],
+    regex:['Regex Builder','Patterns explained'],
+    review:['Code Review','Improve your code'],
+    api:['API Helper','Integration and docs'],
+    trans:['Translator','Between any languages'],
+    speak:['Conversation Partner','Practice speaking'],
+    grammar:['Grammar','Rules and corrections'],
+    vocab:['Vocabulary','Learn new words'],
+    ielts:['IELTS & TOEFL','Test preparation'],
+    health:['Health Advisor','General wellness info'],
+    diet:['Nutrition','Meal plans and calories'],
+    workout:['Fitness','Training programs'],
+    cook:['Chef','Recipes and cooking'],
+    travel:['Travel Planner','Trips and itineraries'],
+    psy:['Supportive Listener','Talk it through'],
+    parent:['Parenting','Child raising advice'],
+    home:['Home & Repair','Fix things yourself'],
+    study:['Study Planner','Organize your learning'],
+    idea:['Idea Generator','Brainstorm anything'],
+    name:['Name Generator','Brands and projects'],
+    prompt:['Prompt Engineer','Better AI prompts'],
+    gift:['Gift Ideas','Thoughtful suggestions'],
+    event:['Event Planner','Parties and gatherings'],
+    decor:['Interior Design','Style your space'],
+    search:['Deep Research','Thorough answers'],
+    compare:['Comparison','Weigh the options'],
+    decide:['Decision Helper','Pros and cons'],
+    quiz:['Quiz Maker','Test your knowledge'],
+    excel:['Excel & Sheets','Formulas and tables']
+  },
+  ar:{
+    artist:['مُنشئ الصور','إنشاء صور بالذكاء الاصطناعي'],
+    vision:['تحليل الصور','قراءة ووصف الصور'],
+    tutor:['مدرّس خصوصي','شرح خطوة بخطوة'],
+    math:['حل الرياضيات','الجبر والهندسة والتفاضل'],
+    physics:['الفيزياء والكيمياء','حل مسائل العلوم'],
+    history:['التاريخ والجغرافيا','الأحداث والأماكن'],
+    exam:['التحضير للامتحان','أسئلة تدريبية ومراجعة'],
+    flash:['بطاقات تعليمية','بطاقات للحفظ السريع'],
+    explain:['اشرح ببساطة','تبسيط المواضيع الصعبة'],
+    write:['مساعد الكتابة','أي نص وأي أسلوب'],
+    email:['كاتب الإيميلات','رسائل احترافية'],
+    resume:['السيرة الذاتية','تميّز أمام الموظِّفين'],
+    story:['راوي القصص','قصص ونصوص'],
+    poem:['الشعر','قصائد بأي أسلوب'],
+    blog:['مدونة ومقالات','محتوى محسّن للبحث'],
+    edit:['محرر النصوص','تصحيح وتحسين الكتابة'],
+    sum:['التلخيص','نص طويل إلى نقاط'],
+    rewrite:['إعادة الصياغة','قلها بطريقة أخرى'],
+    biz:['خطة عمل','استراتيجية وهيكلة'],
+    market:['التسويق','حملات ونصوص إعلانية'],
+    social:['التواصل الاجتماعي','منشورات وتعليقات'],
+    pitch:['عرض تقديمي','أقنع المستثمرين'],
+    meeting:['محضر اجتماع','ملخصات ومهام'],
+    legal:['مساعد قانوني','عقود وبنود'],
+    finance:['المالية','ميزانية وتحليل'],
+    interview:['مدرب المقابلات','تدريب وملاحظات'],
+    code:['مبرمج','اكتب كودًا بأي لغة'],
+    debug:['مصحح الأخطاء','ابحث وأصلح الأخطاء'],
+    sql:['مساعد SQL','استعلامات وقواعد بيانات'],
+    regex:['منشئ Regex','أنماط مشروحة'],
+    review:['مراجعة الكود','حسّن كودك'],
+    api:['مساعد API','تكامل وتوثيق'],
+    trans:['المترجم','بين أي لغتين'],
+    speak:['شريك المحادثة','تدرّب على التحدث'],
+    grammar:['القواعد','قواعد وتصحيحات'],
+    vocab:['المفردات','تعلّم كلمات جديدة'],
+    ielts:['آيلتس وتوفل','التحضير للاختبار'],
+    health:['مستشار صحي','معلومات صحية عامة'],
+    diet:['التغذية','خطط وجبات وسعرات'],
+    workout:['اللياقة','برامج تدريب'],
+    cook:['الطاهي','وصفات وطبخ'],
+    travel:['مخطط السفر','رحلات وبرامج'],
+    psy:['مستمع داعم','تحدث بحرية'],
+    parent:['تربية الأطفال','نصائح للوالدين'],
+    home:['المنزل والإصلاح','أصلح بنفسك'],
+    study:['مخطط الدراسة','نظّم تعلمك'],
+    idea:['مولد الأفكار','عصف ذهني'],
+    name:['مولد الأسماء','علامات ومشاريع'],
+    prompt:['مهندس الأوامر','أوامر أفضل للذكاء'],
+    gift:['أفكار هدايا','اقتراحات مدروسة'],
+    event:['منظم الفعاليات','حفلات ولقاءات'],
+    decor:['التصميم الداخلي','نسّق مساحتك'],
+    search:['بحث معمّق','إجابات شاملة'],
+    compare:['المقارنة','وازن الخيارات'],
+    decide:['مساعد القرار','إيجابيات وسلبيات'],
+    quiz:['صانع الاختبارات','اختبر معرفتك'],
+    excel:['إكسل وجداول','معادلات وجداول']
+  },
+  tr:{
+    artist:['Görsel Üretici','Yapay zekâ ile görsel üret'],
+    vision:['Görsel Analizi','Fotoğrafları oku ve açıkla'],
+    tutor:['Özel Öğretmen','Adım adım ders anlatımı'],
+    math:['Matematik Çözücü','Cebir, geometri, analiz'],
+    physics:['Fizik & Kimya','Fen problemlerini çöz'],
+    history:['Tarih & Coğrafya','Olaylar ve yerler'],
+    exam:['Sınav Hazırlık','Alıştırma soruları ve tekrar'],
+    flash:['Bilgi Kartları','Hızlı ezber kartları'],
+    explain:['Basitçe Açıkla','Zor konuları sadeleştir'],
+    write:['Yazma Asistanı','Her metin, her üslup'],
+    email:['E-posta Yazarı','Profesyonel e-postalar'],
+    resume:['CV & Ön Yazı','İşverenlerin dikkatini çek'],
+    story:['Hikâye Anlatıcı','Kurgu ve senaryo'],
+    poem:['Şiir','Her tarzda dize'],
+    blog:['Blog & Makale','SEO uyumlu içerik'],
+    edit:['Metin Editörü','Yazıyı düzelt ve cilala'],
+    sum:['Özetleyici','Uzun metni özetle'],
+    rewrite:['Yeniden Yazıcı','Farklı bir şekilde söyle'],
+    biz:['İş Planı','Strateji ve yapı'],
+    market:['Pazarlama','Kampanya ve metin'],
+    social:['Sosyal Medya','Gönderi ve açıklamalar'],
+    pitch:['Sunum Destesi','Yatırımcıları ikna et'],
+    meeting:['Toplantı Notları','Özet ve görevler'],
+    legal:['Hukuk Asistanı','Sözleşme ve maddeler'],
+    finance:['Finans','Bütçe ve analiz'],
+    interview:['Mülakat Koçu','Pratik ve geri bildirim'],
+    code:['Programcı','Her dilde kod yaz'],
+    debug:['Hata Ayıklayıcı','Hataları bul ve düzelt'],
+    sql:['SQL Asistanı','Sorgu ve veritabanları'],
+    regex:['Regex Oluşturucu','Desenler açıklanmış'],
+    review:['Kod İncelemesi','Kodunu iyileştir'],
+    api:['API Yardımcısı','Entegrasyon ve dokümanlar'],
+    trans:['Çevirmen','Diller arasında'],
+    speak:['Konuşma Partneri','Konuşma pratiği'],
+    grammar:['Dil Bilgisi','Kurallar ve düzeltmeler'],
+    vocab:['Kelime Bilgisi','Yeni kelimeler öğren'],
+    ielts:['IELTS & TOEFL','Sınav hazırlığı'],
+    health:['Sağlık Danışmanı','Genel sağlık bilgisi'],
+    diet:['Beslenme','Öğün planı ve kalori'],
+    workout:['Fitness','Antrenman programları'],
+    cook:['Şef','Tarifler ve pişirme'],
+    travel:['Seyahat Planlayıcı','Geziler ve programlar'],
+    psy:['Destekleyici Dinleyici','İçini dök'],
+    parent:['Ebeveynlik','Çocuk yetiştirme tavsiyeleri'],
+    home:['Ev & Tamir','Kendin yap'],
+    study:['Çalışma Planlayıcı','Öğrenmeni düzenle'],
+    idea:['Fikir Üretici','Beyin fırtınası'],
+    name:['İsim Üretici','Marka ve projeler'],
+    prompt:['Prompt Mühendisi','Daha iyi AI komutları'],
+    gift:['Hediye Fikirleri','Özenli öneriler'],
+    event:['Etkinlik Planlayıcı','Parti ve buluşmalar'],
+    decor:['İç Tasarım','Mekânını şekillendir'],
+    search:['Derin Araştırma','Kapsamlı yanıtlar'],
+    compare:['Karşılaştırma','Seçenekleri tart'],
+    decide:['Karar Yardımcısı','Artılar ve eksiler'],
+    quiz:['Test Oluşturucu','Bilgini sına'],
+    excel:['Excel & Tablolar','Formüller ve tablolar']
+  },
+};
+const CAT_I18N = {
+  en:{'عمومی':'General', 'یادگیری':'Learning', 'نوشتن':'Writing', 'کار':'Work', 'برنامه‌نویسی':'Coding', 'زبان':'Language', 'زندگی':'Life', 'خلاقیت':'Creativity'},
+  ar:{'عمومی':'عام', 'یادگیری':'التعلّم', 'نوشتن':'الكتابة', 'کار':'العمل', 'برنامه‌نویسی':'البرمجة', 'زبان':'اللغات', 'زندگی':'الحياة', 'خلاقیت':'الإبداع'},
+  tr:{'عمومی':'Genel', 'یادگیری':'Öğrenme', 'نوشتن':'Yazma', 'کار':'İş', 'برنامه‌نویسی':'Kodlama', 'زبان':'Dil', 'زندگی':'Yaşam', 'خلاقیت':'Yaratıcılık'},
+};
+
+/* نام ابزار به زبان فعلی */
+function toolT(t){ const m=(TOOL_I18N[USET.lang]||{})[t.id]; return m?m[0]:t.t; }
+function toolD(t){ const m=(TOOL_I18N[USET.lang]||{})[t.id]; return m?m[1]:t.d; }
+function catT(c){ return (CAT_I18N[USET.lang]||{})[c] || c; }
+
 function T(k){
   const d = I18N[USET.lang] || I18N.fa;
   return d[k] || I18N.fa[k] || k;
@@ -2230,6 +2526,8 @@ function applyLang(){
   document.documentElement.lang = USET.lang;
   document.documentElement.dir  = rtl ? 'rtl' : 'ltr';
   applyI18N();
+  try{ buildHome(); }catch(e){}
+  try{ if(curTool) $('title').textContent = toolT(curTool); }catch(e){}
 }
 
 /* --- آواتار --- */
@@ -2292,8 +2590,8 @@ function openDoc(kind){
   $('pickmodal').classList.add('on');
 }
 function clearAll(){
-  if(confirm('همه گفتگوهای ذخیره‌شده پاک شوند؟')){
-    localStorage.removeItem('hist'); curId = null; renderHist(); alert('تاریخچه پاک شد.');
+  if(confirm(T('confirmClear'))){
+    localStorage.removeItem('hist'); curId = null; renderHist(); alert(T('histCleared'));
   }
 }
 
@@ -2319,7 +2617,7 @@ function go(s){
   if(s === 'set') paintSet();
   sfx('tap');
   document.body.classList.toggle('in-chat', s === 'chat');
-  $('title').textContent = (s === 'chat' && curTool) ? curTool.t : TITLES[s];
+  $('title').textContent = (s === 'chat' && curTool) ? toolT(curTool) : TITLES[s];
   if(s === 'hist') renderHist();
   if(s === 'set') paintSet();
   document.querySelector('main').scrollTop = 0;
@@ -2339,7 +2637,7 @@ function paintTool(){
     b.style.background = curTool.g;
     b.innerHTML = sceneBG(curTool.cat) +
                   '<div class="bic">' + svgIcon(curTool.id, 27) + '</div>' +
-                  '<div class="bt"><h3>' + curTool.t + '</h3><p>' + curTool.d + '</p></div>';
+                  '<div class="bt"><h3>' + toolT(curTool) + '</h3><p>' + toolD(curTool) + '</p></div>';
   } else { b.className = ''; b.innerHTML = ''; }
   document.documentElement.style.setProperty('--bubble',
     curTool ? curTool.g : 'linear-gradient(135deg,#2b6cf6,#3a7bff)');
@@ -2352,7 +2650,7 @@ function newChat(){
   chat.innerHTML = '';
   paintTool();
   welcome();
-  if(screen === 'chat') $('title').textContent = curTool ? curTool.t : 'چت';
+  if(screen === 'chat') $('title').textContent = curTool ? toolT(curTool) : T('chat');
 }
 
 /* ================= تاریخچه ================= */
@@ -2950,7 +3248,7 @@ function validInput(t){
 
 /* ---------- ۶) پاک‌سازی امن حافظه ---------- */
 function wipeAll(){
-  if(!confirm('همه داده‌های محلی (تاریخچه و تنظیمات) پاک شود؟\n\nتوجه: سهمیه امروز شما برنمی‌گردد.')) return;
+  if(!confirm(T('confirmWipe'))) return;
 
   /* 'credit' عمداً پاک نمی‌شود — وگرنه سهمیه دور زده می‌شود.
      در هر حال سرور هم مستقل می‌شمارد. */
@@ -3364,7 +3662,7 @@ function renderSuggest(qs){
       '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" ' +
       'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
       '<path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.9 9.9 0 0 1-2.8-.4L3 21l1.5-5.1A8.2 8.2 0 0 1 3.6 11.5 8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/></svg>' +
-      '<span>سوالات بعدی</span>' +
+      '<span>'+T('nextQ')+'</span>' +
       '<button class="sx" onclick="this.closest(\'.sugg\').remove()" aria-label="بستن">×</button>' +
     '</div>';
 
@@ -3394,7 +3692,7 @@ async function pickPdf(el){
   const f = el.files && el.files[0];
   el.value = '';
   if(!f) return;
-  if(f.size > 10 * 1048576){ alert('حجم فایل نباید بیشتر از ۱۰ مگابایت باشد.'); return; }
+  if(f.size > 10 * 1048576){ alert(T('fileBig')); return; }
 
   const need = pdfCost(f.size);
   if(!canSpend(need)){
@@ -3481,7 +3779,7 @@ function pickImage(el){
   const f = el.files && el.files[0];
   el.value = '';
   if(!f) return;
-  if(!f.type.startsWith('image/')){ alert('فقط فایل تصویری مجاز است.'); return; }
+  if(!f.type.startsWith('image/')){ alert(T('imgOnly')); return; }
   resizeImage(f, 1024, dataUrl => {
     pendingImg = dataUrl;
     $('preview').className = 'on';
@@ -3525,7 +3823,7 @@ async function toggleMic(){
     return;
   }
   if(!navigator.mediaDevices || !window.MediaRecorder){
-    alert('مرورگر شما ضبط صدا را پشتیبانی نمی‌کند.');
+    alert(T('micOff'));
     return;
   }
 
@@ -3533,7 +3831,7 @@ async function toggleMic(){
   try{
     stream = await navigator.mediaDevices.getUserMedia({audio:true});
   }catch(e){
-    alert('دسترسی به میکروفون داده نشد. در تنظیمات مرورگر/اپ اجازه میکروفون را فعال کنید.');
+    alert(T('micDenied'));
     return;
   }
 
@@ -3559,7 +3857,7 @@ async function transcribe(blob){
   if(!canSpend(APP.COST.voice)){ noCredit(APP.COST.voice); return; }
   spend(APP.COST.voice);
   const ph = inp.placeholder;
-  inp.placeholder = '⏳ در حال تبدیل گفتار به متن...';
+  inp.placeholder = T('sttWait');
   inp.disabled = true;
   try{
     let r;
@@ -3582,7 +3880,7 @@ async function transcribe(blob){
     const j = await r.json();
     if(!r.ok) throw new Error(j.error?.message || r.status);
     const txt = (j.text || '').trim();
-    if(!txt){ alert('چیزی شنیده نشد. دوباره تلاش کنید.'); return; }
+    if(!txt){ alert(T('micNothing')); return; }
     inp.value = (inp.value ? inp.value + ' ' : '') + txt;
     inp.dispatchEvent(new Event('input'));
     inp.focus();
@@ -3958,7 +4256,7 @@ function showInstall(){
   if(document.getElementById('instbar')) return;
   const b = document.createElement('div');
   b.id = 'instbar';
-  b.innerHTML = '<span>📲 این اپ را روی صفحه خانگی نصب کنید</span>' +
+  b.innerHTML = '<span>'+T('install')+'</span>' +
     '<button onclick="doInstall()">نصب</button><button class="x" onclick="hideInstall()">×</button>';
   document.body.appendChild(b);
 }
