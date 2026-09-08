@@ -1,6 +1,6 @@
 /* Service Worker — کار آفلاین + همیشه به‌روز
    نسخه با هر انتشار بالا می‌رود تا کش قدیمی خودکار پاک شود. */
-const VER   = 'v3';
+const VER   = 'v4';
 const CACHE = 'aichat-' + VER;
 
 const ASSETS = [
