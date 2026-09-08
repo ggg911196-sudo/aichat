@@ -1,6 +1,7 @@
 const OK=['*'];const CAP=900,IP_DAY=25,DEV_DAY=25,IP_MIN=8,GAP=1200,RPM=15,NEWMAX=60;
 const GM=['gemini-3.5-flash','gemini-3.5-flash-lite','gemini-3.8-flash'];
 const GQ=['openai/gpt-oss-120b','qwen/qwen3.8-27b'];
+const CF=['@cf/openai/gpt-oss-120b','@cf/meta/llama-3.1-8b-instruct-fp8-fast'];
 const RAM={r:[],i:new Map()};
 const T=()=>new Date().toISOString().slice(0,10);
 const TTL=90000;
@@ -51,6 +52,12 @@ else if(p==='groq'){if(!GQ.includes(m))return J({error:{message:'مدل مجاز
 if(!e.GROQ_KEY)return J({error:{message:'GROQ_KEY تنظیم نشده.'}},500,h);
 const q={model:m,messages:B.messages||[],temperature:B.temperature??0.7,max_tokens:Math.min(B.max_tokens||2500,4000)};if(B.reasoning_effort)q.reasoning_effort=B.reasoning_effort;
 x=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+e.GROQ_KEY},body:JSON.stringify(q)})}
+else if(p==='cf'){if(!CF.includes(m))return J({error:{message:'مدل مجاز نیست: '+m}},400,h);
+if(!e.AI)return J({error:{message:'AI binding تنظیم نشده.'}},500,h);
+try{const a=await e.AI.run(m,{messages:B.messages||[],max_tokens:Math.min(B.max_tokens||2500,4000),temperature:B.temperature??0.7});
+const txt=a.response??a.result?.response??'';bump();
+return J({choices:[{message:{role:'assistant',content:txt}}]},200,QH())}
+catch(err){return J({error:{message:String(err.message||err)}},502,h)}}
 else return J({error:{message:'سرویس ناشناخته.'}},400,h);
 j=await x.json().catch(()=>({}));if(x.ok)bump();return J(j,x.status,QH())}
 catch(err){return J({error:{message:String(err.message||err)}},502,h)}}};

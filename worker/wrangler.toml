@@ -6,3 +6,6 @@ keep_vars = true
 [[kv_namespaces]]
 binding = "Q"
 id = "bf9373609ed74de5b4cbbb548107e60f"
+
+[ai]
+binding = "AI"

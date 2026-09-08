@@ -1248,7 +1248,8 @@ const APP = {
     {provider:'gemini', keyEnc:'', model:'gemini-3.5-flash-lite', vision:'gemini-3.5-flash', maxTok:3000, label:'Gemini 3.5 Flash-Lite'},
     {provider:'gemini', keyEnc:'', model:'gemini-3.8-flash',      vision:'gemini-3.8-flash', maxTok:3000, label:'Gemini 3.8 Flash'},
     {provider:'groq',   keyEnc:'', model:'openai/gpt-oss-120b', vision:'qwen/qwen3.8-27b', label:'Groq gpt-oss-120b'},
-    {provider:'groq',   keyEnc:'', model:'qwen/qwen3.8-27b',    vision:'qwen/qwen3.8-27b', label:'Groq Qwen3.8'}
+    {provider:'groq',   keyEnc:'', model:'qwen/qwen3.8-27b',    vision:'qwen/qwen3.8-27b', label:'Groq Qwen3.8'},
+    {provider:'cf',     keyEnc:'', model:'@cf/openai/gpt-oss-120b', vision:'', label:'Cloudflare AI'}
   ],
 
   /* اگر true باشد، زنجیره بالا فعال است و ترتیب اولویت رعایت می‌شود */
@@ -1964,11 +1965,11 @@ function coolLeft(c){
 function mDesc(c){
   if(c.provider === 'gemini') return T('mdGemini');
   if(c.provider === 'groq')   return T('mdGroq');
-  if(c.provider === 'openrouter') return T('mdOR');
+  if(c.provider === 'cf') return T('mdCF');
   return c.provider;
 }
 function mIcon(c){
-  return c.provider === 'gemini' ? '✦' : c.provider === 'groq' ? '⚡' : '🔀';
+  return c.provider === 'gemini' ? '✦' : c.provider === 'groq' ? '⚡' : c.provider === 'cf' ? '☁️' : '🔀';
 }
 
 function openModels(){ sfx('tap'); drawModels(); $('mdlsheet').classList.add('on'); }
@@ -2511,7 +2512,7 @@ const I18N = {
     mdLockedMsg:'این مدل فعلاً سهمیه‌اش تمام شده است.',
     mdFellBack:'{n} قفل شد — به حالت خودکار برگشتیم.',
     mdGemini:'قوی، چندزبانه، پشتیبانی از تصویر', mdGroq:'خیلی سریع، مناسب پاسخ کوتاه',
-    mdOR:'مدل‌های متن‌باز متنوع',
+    mdCF:'پشتیبان ابری — سهمیه جدا و مستقل',
     allTools:'همه',
     proTitle:'نسخه Pro', proCode:'کد فعال‌سازی دارید؟',
     proCodeD:'اگر خرید کرده‌اید، کدی که دریافت کردید را اینجا وارد کنید.',
@@ -2572,7 +2573,7 @@ const I18N = {
     mdLockedMsg:'This model has run out of quota for now.',
     mdFellBack:'{n} got locked — switched back to Auto.',
     mdGemini:'Strong, multilingual, supports images', mdGroq:'Very fast, great for short replies',
-    mdOR:'Various open-source models',
+    mdCF:'Cloud backup — its own separate quota',
     allTools:'All',
     proTitle:'Pro version', proCode:'Have an activation code?',
     proCodeD:'If you purchased, enter the code you received here.',
@@ -2633,7 +2634,7 @@ const I18N = {
     mdLockedMsg:'هذا النموذج استنفد حصته حالياً.',
     mdFellBack:'تم قفل {n} — عدنا إلى الوضع التلقائي.',
     mdGemini:'قوي ومتعدد اللغات ويدعم الصور', mdGroq:'سريع جداً ومناسب للردود القصيرة',
-    mdOR:'نماذج مفتوحة المصدر متنوعة',
+    mdCF:'احتياطي سحابي — حصة منفصلة خاصة به',
     allTools:'الكل',
     proTitle:'النسخة Pro', proCode:'هل لديك رمز تفعيل؟',
     proCodeD:'إذا كنت قد اشتريت، أدخل الرمز الذي استلمته هنا.',
@@ -2694,7 +2695,7 @@ const I18N = {
     mdLockedMsg:'Bu modelin kotası şu an dolmuş.',
     mdFellBack:'{n} kilitlendi — Otomatik moda dönüldü.',
     mdGemini:'Güçlü, çok dilli, görsel destekler', mdGroq:'Çok hızlı, kısa yanıtlar için ideal',
-    mdOR:'Çeşitli açık kaynak modeller',
+    mdCF:'Bulut yedeği — kendi ayrı kotası',
     allTools:'Tümü',
     proTitle:'Pro sürüm', proCode:'Etkinleştirme kodunuz var mı?',
     proCodeD:'Satın aldıysanız, aldığınız kodu buraya girin.',
