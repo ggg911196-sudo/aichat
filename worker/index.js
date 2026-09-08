@@ -1,5 +1,9 @@
 /* دامنه سایت + اپ اندروید (TWA بدون Origin یا با android-app://) */
 const OK=['https://aichat-app-53x.pages.dev','android-app://com.aura.app',''];const CAP=900,IP_DAY=25,DEV_DAY=25,IP_MIN=8,GAP=1200,RPM=15,NEWMAX=60;
+/* سقف هر شبکه در روز — عمداً بالا تا کاربران واقعیِ پشت یک اپراتور اذیت نشوند */
+const SUB_DAY=150;
+/* /24 برای IPv4 و /64 برای IPv6 */
+function subnet(ip){if(!ip||ip==='x')return 'x';if(ip.includes(':'))return ip.split(':').slice(0,4).join(':')+'::';const p=ip.split('.');return p.length===4?p[0]+'.'+p[1]+'.'+p[2]+'.0':ip;}
 const GM=['gemini-3.5-flash','gemini-3.5-flash-lite','gemini-3.8-flash'];
 const GQ=['openai/gpt-oss-120b','qwen/qwen3.8-27b'];
 const CF=['@cf/openai/gpt-oss-120b','@cf/meta/llama-3.1-8b-instruct-fp8-fast'];
@@ -23,7 +27,7 @@ if(r.method==='OPTIONS')return new Response(null,{status:204,headers:h});
 if(OK[0]!=='*'&&o&&!OK.includes(o))return J({error:{message:'دامنه مجاز نیست.'}},403,h);
 if(!kv)return J({error:{message:'KV وصل نشده. در تنظیمات Worker یک KV با نام Q اضافه کنید.'}},500,h);
 const d=T(),ip=r.headers.get('CF-Connecting-IP')||'x',dev=clean(r.headers.get('X-Dev'))||'-';
-const kI='i:'+d+':'+ip,kD='d:'+d+':'+dev,kG='g:'+d,kN='n:'+d;
+const kI='i:'+d+':'+ip,kD='d:'+d+':'+dev,kG='g:'+d,kN='n:'+d,kS='s:'+d+':'+subnet(ip);
 if(u.pathname==='/api/health'){const[g,a,b]=await Promise.all([get(kv,kG),get(kv,kI),dev!=='-'?get(kv,kD):0]);
 const used=Math.max(a,b),left=Math.max(0,Math.min(IP_DAY-a,DEV_DAY-b));
 return J({ok:1,date:d,globalUsed:g,globalCap:CAP,yourUsed:used,yourCap:IP_DAY,left:g>=CAP?0:left},200,h)}
@@ -33,9 +37,10 @@ const f=fast(ip);if(f)return J({error:{message:f}},429,h);
 const[g,a,b]=await Promise.all([get(kv,kG),get(kv,kI),dev!=='-'?get(kv,kD):0]);
 if(g>=CAP)return J({error:{message:'ظرفیت امروز اپ تکمیل شده است. فردا سر بزنید.'}},503,h);
 if(a>=IP_DAY||b>=DEV_DAY)return J({error:{message:'سهمیه امروز شما تمام شد. فردا دوباره امتحان کنید.'}},429,h);
+const sub=await get(kv,kS);if(sub>=SUB_DAY)return J({error:{message:'ظرفیت امروز این شبکه پر شده است. فردا دوباره امتحان کنید.'}},429,h);
 if(dev==='-'){const nn=await get(kv,kN);if(nn>=NEWMAX)return J({error:{message:'ظرفیت کاربران جدید امروز پر شده. فردا سر بزنید.'}},429,h)}
 const QH=()=>({...h,'X-Left':String(Math.max(0,Math.min(IP_DAY-a-1,DEV_DAY-b-1))),'X-Cap':String(IP_DAY)});
-const bump=()=>{const p=[inc(kv,kI,1),inc(kv,kG,1)];if(dev!=='-')p.push(inc(kv,kD,1));else p.push(inc(kv,kN,1));ctx.waitUntil(Promise.all(p))};
+const bump=()=>{const p=[inc(kv,kI,1),inc(kv,kG,1),inc(kv,kS,1)];if(dev!=='-')p.push(inc(kv,kD,1));else p.push(inc(kv,kN,1));ctx.waitUntil(Promise.all(p))};
 try{let x,j;
 if(u.pathname==='/api/stt'){if(!e.GROQ_KEY)return J({error:{message:'GROQ_KEY تنظیم نشده.'}},500,h);
 const ab=await r.arrayBuffer();if(ab.byteLength>8e6)return J({error:{message:'فایل بزرگ است.'}},413,h);
