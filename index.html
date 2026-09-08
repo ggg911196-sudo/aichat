@@ -772,13 +772,13 @@
 <main>
   <!-- ============ خانه ============ -->
   <section class="screen on" id="s-home">
-    <div class="sect"><h2><svg class="si" viewBox="0 0 24 24" fill="currentColor"><path d="M4 18h16l1.4-9.2-5.2 3.4L12 4.6 7.8 12.2 2.6 8.8z"/></svg><span data-i18n="exploreT">کاوش کنید</span></h2><a onclick="go('tools')">مشاهده همه ›</a></div>
+    <div class="sect"><h2><svg class="si" viewBox="0 0 24 24" fill="currentColor"><path d="M4 18h16l1.4-9.2-5.2 3.4L12 4.6 7.8 12.2 2.6 8.8z"/></svg><span data-i18n="exploreT">کاوش کنید</span></h2><a onclick="go('tools')" data-i18n="seeAll">مشاهده همه ›</a></div>
     <div class="rail" id="rail"></div>
 
     <div class="sect"><h2 data-i18n="startChat">شروع گفتگو</h2><a onclick="go('chat')" data-i18n="freeChat">چت آزاد ›</a></div>
     <div class="crow" id="crow"></div>
 
-<div class="sect"><h2 data-i18n="moreTools">ابزار بیشتر</h2><a onclick="go('tools')">مشاهده همه ›</a></div>
+<div class="sect"><h2 data-i18n="moreTools">ابزار بیشتر</h2><a onclick="go('tools')" data-i18n="seeAll">مشاهده همه ›</a></div>
     <div class="grid" id="grid"></div>
   </section>
 
@@ -801,16 +801,16 @@
     <div id="storeview">
       <div class="hero2" id="heroBig"></div>
 
-      <div class="sect"><h2 data-i18n="myTools">ابزارهای من</h2><a onclick="go('hist')">مشاهده همه ›</a></div>
+      <div class="sect"><h2 data-i18n="myTools">ابزارهای من</h2><a onclick="go('hist')" data-i18n="seeAll">مشاهده همه ›</a></div>
       <div class="mine" id="mine"></div>
 
-      <div class="sect"><h2 data-i18n="experts">متخصص‌ها</h2><a onclick="filterCat('همه')">مشاهده همه ›</a></div>
+      <div class="sect"><h2 data-i18n="experts">متخصص‌ها</h2><a onclick="filterCat('همه')" data-i18n="seeAll">مشاهده همه ›</a></div>
       <div class="exprow" id="experts"></div>
 
-      <div class="sect"><h2 data-i18n="special">ابزارهای ویژه</h2><a onclick="filterCat('خلاقیت')">مشاهده همه ›</a></div>
+      <div class="sect"><h2 data-i18n="special">ابزارهای ویژه</h2><a onclick="filterCat('خلاقیت')" data-i18n="seeAll">مشاهده همه ›</a></div>
       <div class="elite" id="elite"></div>
 
-      <div class="sect"><h2 data-i18n="creativity">خلاقیت</h2><a onclick="filterCat('نوشتن')">مشاهده همه ›</a></div>
+      <div class="sect"><h2 data-i18n="creativity">خلاقیت</h2><a onclick="filterCat('نوشتن')" data-i18n="seeAll">مشاهده همه ›</a></div>
       <div class="exprow" id="creation"></div>
 
       <div class="sect"><h2 data-i18n="allTools">همه ابزارها</h2><a id="tcount2"></a></div>
@@ -1614,9 +1614,9 @@ function buildConvs(){
     '<div class="conv" onclick="startConv(' + k + ')">' +
       (PHOTO[c.id] ? '<img class="cutout" src="' + PHOTO[c.id] + '" alt="">' : '') +
       '<q></q>' +
-      '<button class="go">شروع چت</button>' +
+      '<button class="go">'+T('startChat')+'</button>' +
     '</div>').join('');
-  [...el.querySelectorAll('.conv q')].forEach((n, k) => { n.textContent = CONVS[k].q; });
+  [...el.querySelectorAll('.conv q')].forEach((n, k) => { n.textContent = convQ(CONVS[k]); });
 }
 
 function startConv(k){
@@ -1715,9 +1715,9 @@ function buildStore(){
     '<img class="hb" src="' + SIMG[HERO.img] + '" alt="">' +
     '<div class="hgrad"></div>' +
     '<div class="htx"><h3></h3><p></p></div>' +
-    '<button class="htry" onclick="startTool(\'' + HERO.id + '\')">شروع</button>';
-  $('heroBig').querySelector('h3').textContent = HERO.t;
-  $('heroBig').querySelector('p').textContent  = HERO.d;
+    '<button class="htry" onclick="startTool(\'' + HERO.id + '\')">'+T('start')+'</button>';
+  $('heroBig').querySelector('h3').textContent = heroT();
+  $('heroBig').querySelector('p').textContent  = heroD();
 
   /* ابزارهای من */
   const fav = (JSON.parse(localStorage.getItem('fav') || '["artist","vision","tutor"]'))
@@ -1727,7 +1727,7 @@ function buildStore(){
       '<span class="mic">' +
         '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" ' +
         'stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>' +
-      '</span><b>افزودن</b></div>' +
+      '</span><b>'+T('addTool')+'</b></div>' +
     fav.map(t =>
       '<div class="mi" onclick="startTool(\'' + t.id + '\')">' +
         '<span class="mic" style="background:' + t.g + '">' + svgIcon(t.id, 22, 2.2) + '</span>' +
@@ -1741,19 +1741,19 @@ function buildStore(){
     '</div>').join('') + '</div>';
   $('experts').innerHTML = col(EXPERTS.slice(0,3)) + col(EXPERTS.slice(3));
   [...$('experts').querySelectorAll('.erow')].forEach((n,i) => {
-    n.querySelector('h4').textContent = EXPERTS[i].t;
-    n.querySelector('p').textContent  = EXPERTS[i].d;
+    n.querySelector('h4').textContent = expT(EXPERTS[i]);
+    n.querySelector('p').textContent  = expD(EXPERTS[i]);
   });
 
   /* ابزارهای ویژه */
   $('elite').innerHTML =
     '<div class="ebig"><img src="' + SIMG.e_wide + '" alt="">' +
-      '<span class="ebt">ابزارهای پرطرفدار</span></div>' +
+      '<span class="ebt">'+T('popular')+'</span></div>' +
     '<div class="erow2">' + ELITE.map(e =>
       '<div class="ecell" onclick="startTool(\'' + e.id + '\')">' +
         '<img src="' + SIMG[e.img] + '" alt="">' +
-        '<b></b><button class="etry">شروع</button></div>').join('') + '</div>';
-  [...$('elite').querySelectorAll('.ecell b')].forEach((n,i) => { n.textContent = ELITE[i].t; });
+        '<b></b><button class="etry">'+T('start')+'</button></div>').join('') + '</div>';
+  [...$('elite').querySelectorAll('.ecell b')].forEach((n,i) => { n.textContent = eliT(ELITE[i]); });
 
   /* خلاقیت */
   const c2 = (arr) => '<div class="ecol">' + arr.map(e => {
@@ -1764,13 +1764,13 @@ function buildStore(){
   }).join('') + '</div>';
   $('creation').innerHTML = c2(CREATION.slice(0,2)) + c2(CREATION.slice(2));
   [...$('creation').querySelectorAll('.erow')].forEach((n,i) => {
-    n.querySelector('h4').textContent = CREATION[i].t;
-    n.querySelector('p').textContent  = CREATION[i].d;
+    n.querySelector('h4').textContent = (TOOLS.find(x=>x.id===CREATION[i].id)?toolT(TOOLS.find(x=>x.id===CREATION[i].id)):CREATION[i].t);
+    n.querySelector('p').textContent  = (TOOLS.find(x=>x.id===CREATION[i].id)?toolD(TOOLS.find(x=>x.id===CREATION[i].id)):CREATION[i].d);
   });
 
   /* شبکه کامل */
   $('allgrid2').innerHTML = TOOLS.map(cellHTML).join('');
-  $('tcount2').textContent = TOOLS.length + ' ابزار';
+  $('tcount2').textContent = TOOLS.length + ' ' + T('toolsWord');
 }
 
 /* ================= سیستم اشتراک Pro ================= */
@@ -2133,6 +2133,7 @@ const I18N = {
     voice:'صدا', scan:'اسکن کنید', album:'آلبوم', pdf:'فایل PDF', camera:'دوربین',
     hello:'سلام! 👋 هر سوالی داری بپرس.', msgs:'پیام',
     bubDefault:'پیش‌فرض', bubSoft:'کاملاً گرد', bubSquare:'گوشه‌دار', bubLine:'خطی',
+    addTool:'افزودن', startChat:'شروع چت', popular:'ابزارهای پرطرفدار', start:'شروع', toolsWord:'ابزار',
     allTools:'همه',
     proTitle:'نسخه Pro', proCode:'کد فعال‌سازی دارید؟',
     proCodeD:'اگر خرید کرده‌اید، کدی که دریافت کردید را اینجا وارد کنید.',
@@ -2175,6 +2176,7 @@ const I18N = {
     voice:'Voice', scan:'Scan', album:'Album', pdf:'PDF file', camera:'Camera',
     hello:'Hi! 👋 Ask me anything.', msgs:'messages',
     bubDefault:'Default', bubSoft:'Rounded', bubSquare:'Square', bubLine:'Outline',
+    addTool:'Add', startChat:'Start chat', popular:'Popular tools', start:'Start', toolsWord:'tools',
     allTools:'All',
     proTitle:'Pro version', proCode:'Have an activation code?',
     proCodeD:'If you purchased, enter the code you received here.',
@@ -2217,6 +2219,7 @@ const I18N = {
     voice:'صوت', scan:'مسح', album:'الألبوم', pdf:'ملف PDF', camera:'الكاميرا',
     hello:'مرحباً! 👋 اسألني أي شيء.', msgs:'رسالة',
     bubDefault:'افتراضي', bubSoft:'دائري', bubSquare:'مربع', bubLine:'خطي',
+    addTool:'إضافة', startChat:'ابدأ الدردشة', popular:'الأدوات الشائعة', start:'ابدأ', toolsWord:'أداة',
     allTools:'الكل',
     proTitle:'النسخة Pro', proCode:'هل لديك رمز تفعيل؟',
     proCodeD:'إذا كنت قد اشتريت، أدخل الرمز الذي استلمته هنا.',
@@ -2259,6 +2262,7 @@ const I18N = {
     voice:'Ses', scan:'Tara', album:'Albüm', pdf:'PDF dosyası', camera:'Kamera',
     hello:'Merhaba! 👋 Bana her şeyi sorabilirsin.', msgs:'mesaj',
     bubDefault:'Varsayılan', bubSoft:'Yuvarlak', bubSquare:'Köşeli', bubLine:'Çizgili',
+    addTool:'Ekle', startChat:'Sohbeti başlat', popular:'Popüler araçlar', start:'Başla', toolsWord:'araç',
     allTools:'Tümü',
     proTitle:'Pro sürüm', proCode:'Etkinleştirme kodunuz var mı?',
     proCodeD:'Satın aldıysanız, aldığınız kodu buraya girin.',
@@ -2285,6 +2289,53 @@ const I18N = {
   }
 };
 /* ترجمه نام و توضیح ابزارها */
+
+/* ترجمه متخصص‌ها، ویژه‌ها، هیرو و کارت‌های گفتگو */
+const X_I18N = {
+ en:{
+  EXP:{psy:['Psychology Advisor','I am here to help you find peace of mind.'],
+    trans:['Language Expert','Translation, editing and grammar correction.'],
+    gift:['Gift Advisor','I suggest the perfect gift for you.'],
+    tutor:['Private Tutor','I explain any lesson step by step.'],
+    code:['Programmer','I write code and fix your errors.']},
+  ELI:{artist:'Creative Art', trans:'Online Translation', poem:'Poetry & Literature', sum:'Summarizer'},
+  HERO:['Smart Advisor','Discover your past and future in conversation with AI.'],
+  CONV:{idea:'Give me a creative idea for today', sum:'Summarize this text for me',
+    artist:'Create a beautiful image for me', debug:'What is wrong with my code?',
+    travel:'Where should I go this weekend?', poem:'Write me a short poem'}
+ },
+ ar:{
+  EXP:{psy:['مستشار نفسي','أنا هنا لمساعدتك على راحة البال.'],
+    trans:['خبير اللغات','ترجمة وتحرير وتصحيح القواعد.'],
+    gift:['مستشار الهدايا','أقترح لك أفضل هدية.'],
+    tutor:['مدرّس خصوصي','أشرح أي درس خطوة بخطوة.'],
+    code:['مبرمج','أكتب الكود وأصلح الأخطاء.']},
+  ELI:{artist:'فن إبداعي', trans:'ترجمة فورية', poem:'شعر وأدب', sum:'ملخِّص'},
+  HERO:['مستشار ذكي','اكتشف ماضيك ومستقبلك في حوار مع الذكاء الاصطناعي.'],
+  CONV:{idea:'أعطني فكرة إبداعية لليوم', sum:'لخّص لي هذا النص',
+    artist:'اصنع لي صورة جميلة', debug:'ما الخطأ في الكود الخاص بي؟',
+    travel:'أين أذهب في عطلة نهاية الأسبوع؟', poem:'اكتب لي قصيدة قصيرة'}
+ },
+ tr:{
+  EXP:{psy:['Psikoloji Danışmanı','Zihinsel huzura ulaşman için yanındayım.'],
+    trans:['Dil Uzmanı','Çeviri, düzenleme ve dil bilgisi düzeltme.'],
+    gift:['Hediye Danışmanı','Sana en iyi hediyeyi öneririm.'],
+    tutor:['Özel Öğretmen','Her dersi adım adım anlatırım.'],
+    code:['Programcı','Kod yazar ve hataları düzeltirim.']},
+  ELI:{artist:'Yaratıcı Sanat', trans:'Çevrimiçi Çeviri', poem:'Şiir ve Edebiyat', sum:'Özetleyici'},
+  HERO:['Akıllı Danışman','Geçmişini ve geleceğini yapay zekâ ile sohbette keşfet.'],
+  CONV:{idea:'Bugün için bana yaratıcı bir fikir ver', sum:'Bu metni benim için özetle',
+    artist:'Bana güzel bir görsel oluştur', debug:'Kodumun nesi var?',
+    travel:'Bu hafta sonu nereye gitmeliyim?', poem:'Bana kısa bir şiir yaz'}
+ },
+};
+function expT(e){const m=(X_I18N[USET.lang]||{}).EXP;return m&&m[e.id]?m[e.id][0]:e.t;}
+function expD(e){const m=(X_I18N[USET.lang]||{}).EXP;return m&&m[e.id]?m[e.id][1]:e.d;}
+function eliT(e){const m=(X_I18N[USET.lang]||{}).ELI;return m&&m[e.id]?m[e.id]:e.t;}
+function heroT(){const m=(X_I18N[USET.lang]||{}).HERO;return m?m[0]:HERO.t;}
+function heroD(){const m=(X_I18N[USET.lang]||{}).HERO;return m?m[1]:HERO.d;}
+function convQ(c){const m=(X_I18N[USET.lang]||{}).CONV;return m&&m[c.id]?m[c.id]:c.q;}
+
 const TOOL_I18N = {
   en:{
     artist:['Image Creator','Generate images with AI'],
