@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.aura.app",
+      "sha256_cert_fingerprints": [
+        "E8:76:4C:67:A7:14:C9:94:45:37:66:0A:6A:12:06:5C:36:71:97:AF:19:36:75:E3:9E:98:58:5E:90:C7:FA:48"
+      ]
+    }
+  }
+]
