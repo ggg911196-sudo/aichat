@@ -55,7 +55,7 @@ x=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',h
 else if(p==='cf'){if(!CF.includes(m))return J({error:{message:'مدل مجاز نیست: '+m}},400,h);
 if(!e.AI)return J({error:{message:'AI binding تنظیم نشده.'}},500,h);
 try{const a=await e.AI.run(m,{messages:B.messages||[],max_tokens:Math.min(B.max_tokens||2500,4000),temperature:B.temperature??0.7});
-if(B.__raw)return J({raw:a},200,QH());const txt=a.response??a.result?.response??'';bump();
+const txt=a.choices?.[0]?.message?.content??a.response??a.result?.response??'';bump();
 return J({choices:[{message:{role:'assistant',content:txt}}]},200,QH())}
 catch(err){return J({error:{message:String(err.message||err)}},502,h)}}
 else return J({error:{message:'سرویس ناشناخته.'}},400,h);
