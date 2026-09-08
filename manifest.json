@@ -61,5 +61,35 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "id": "/",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "گفتگوی جدید",
+      "short_name": "چت",
+      "url": "./index.html?a=new",
+      "icons": [
+        {
+          "src": "icons/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "ساخت تصویر",
+      "short_name": "تصویر",
+      "url": "./index.html?a=img",
+      "icons": [
+        {
+          "src": "icons/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
   ]
 }
