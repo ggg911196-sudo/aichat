@@ -106,6 +106,43 @@
   .daysep{align-self:center;color:var(--dim);font-size:12.5px;margin:2px 0 6px;
     letter-spacing:.2px}
 
+
+  /* ===== [جدید] انتخابگر مدل ===== */
+  .mdlbtn{display:flex;align-items:center;gap:5px;background:var(--btn);border:none;
+    border-radius:16px;padding:5px 10px 5px 8px;color:var(--fg2);font:inherit;
+    font-size:11.5px;font-weight:700;cursor:pointer;flex:0 0 auto;max-width:120px}
+  .mdlbtn:active{background:var(--btn2)}
+  .mdlbtn .dt{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:0 0 auto}
+  .mdlbtn .dt.off{background:#ff9f43}
+  .mdlbtn b{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mdlbtn svg{width:11px;height:11px;opacity:.6;flex:0 0 auto}
+
+  #mdlsheet{position:fixed;inset:0;z-index:78;display:none}
+  #mdlsheet.on{display:block}
+  #mdlsheet .bg{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+  #mdlsheet .pan{position:absolute;inset-inline:0;bottom:0;background:var(--sheet);
+    border-radius:24px 24px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom));
+    max-height:86vh;overflow-y:auto;animation:cup .22s cubic-bezier(.2,.9,.3,1)}
+  #mdlsheet .hd{display:flex;align-items:center;margin-bottom:4px}
+  #mdlsheet .hd h3{flex:1;margin:0;font-size:17px;font-weight:800;text-align:center}
+  #mdlsheet .hd button{background:none;border:none;color:var(--dim);font-size:24px;
+    cursor:pointer;width:34px;height:34px;line-height:1}
+  #mdlsheet .note{color:var(--dim);font-size:12px;text-align:center;margin:0 0 14px;line-height:1.7}
+  .mrow{display:flex;align-items:center;gap:11px;width:100%;text-align:start;
+    background:var(--card2);border:1.5px solid transparent;border-radius:15px;
+    padding:13px 14px;margin-bottom:9px;color:var(--fg);font:inherit;cursor:pointer}
+  .mrow.on{border-color:var(--accent)}
+  .mrow.dis{opacity:.5}
+  .mrow .mi2{width:36px;height:36px;border-radius:11px;flex:0 0 auto;display:grid;
+    place-items:center;font-size:16px;background:var(--sunk)}
+  .mrow .mtx{flex:1;min-width:0}
+  .mrow .mtx b{display:block;font-size:14px;font-weight:700;margin-bottom:2px}
+  .mrow .mtx span{display:block;font-size:11.5px;color:var(--dim);line-height:1.6}
+  .mtag{font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;flex:0 0 auto}
+  .mtag.free{background:rgba(18,217,154,.16);color:var(--accent)}
+  .mtag.wait{background:rgba(255,159,67,.16);color:#ff9f43}
+  .mtag.now{background:var(--accent);color:var(--onacc)}
+
   /* ===== [جدید] منوی سه‌نقطه چت ===== */
   .dots{display:none}
   body.in-chat .top .dots{display:grid}
@@ -830,6 +867,10 @@
     </svg>
   </button>
   <button class="iconbtn" id="setBtn" onclick="go('set')" aria-label="تنظیمات کاربر"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5v.2a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1.1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1h.2a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></button>
+  <button class="mdlbtn" id="mdlbtn" onclick="openModels()" aria-label="انتخاب مدل">
+    <span class="dt" id="mdldot"></span><b id="mdlname">Auto</b>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
   <button class="iconbtn dots" onclick="openCMenu()" aria-label="گزینه‌ها"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></button>
   <button class="sparkbtn" onclick="go('pro')" aria-label="نسخه Pro">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -1087,6 +1128,16 @@
     <button onclick="shareChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg><span data-i18n="mShare">اشتراک‌گذاری</span></button>
     <button onclick="openCSet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg><span data-i18n="mCSet">تنظیمات گفتگو</span></button>
     <button class="danger" onclick="clearChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"/></svg><span data-i18n="mClear">پاک‌کردن گفتگو</span></button>
+  </div>
+</div>
+
+
+<div id="mdlsheet" onclick="if(event.target.classList.contains('bg'))closeModels()">
+  <div class="bg"></div>
+  <div class="pan">
+    <div class="hd"><h3 data-i18n="mdlTitle">انتخاب مدل</h3><button onclick="closeModels()">&times;</button></div>
+    <p class="note" data-i18n="mdlNote">مدل‌هایی که سهمیه‌شان تمام شده تا آزادشدن قفل می‌مانند.</p>
+    <div id="mdlist"></div>
   </div>
 </div>
 
@@ -1891,6 +1942,90 @@ function toast(msg){
   _tt = setTimeout(() => { el.style.opacity = '0'; }, 1900);
 }
 
+
+/* ================= [جدید] انتخابگر مدل با قفل خودکار ================= */
+/* '' یعنی خودکار (زنجیره کامل با سوییچ خودکار) */
+let PICKED = localStorage.getItem('picked') || '';
+
+/* شناسه یکتای هر حلقه زنجیره */
+function mid(c){ return c.provider + '|' + (c.model || ''); }
+
+/* چند دقیقه تا آزادشدن قفل مانده */
+function coolLeft(c){
+  const t = +localStorage.getItem(coolKey(c)) || 0;
+  const d = t - Date.now();
+  return d > 0 ? Math.ceil(d / 60000) : 0;
+}
+
+/* توضیح کوتاه هر سرویس */
+function mDesc(c){
+  if(c.provider === 'gemini') return T('mdGemini');
+  if(c.provider === 'groq')   return T('mdGroq');
+  if(c.provider === 'openrouter') return T('mdOR');
+  return c.provider;
+}
+function mIcon(c){
+  return c.provider === 'gemini' ? '✦' : c.provider === 'groq' ? '⚡' : '🔀';
+}
+
+function openModels(){ sfx('tap'); drawModels(); $('mdlsheet').classList.add('on'); }
+function closeModels(){ $('mdlsheet').classList.remove('on'); }
+
+function drawModels(){
+  const list = (APP.CHAIN || []).filter(c => c && (APP.PROXY || c.key || c.keyEnc));
+  let html =
+    '<button class="mrow' + (PICKED===''?' on':'') + '" onclick="pickModel(\'\')">' +
+      '<span class="mi2">🔄</span>' +
+      '<span class="mtx"><b>' + T('mdAuto') + '</b><span>' + T('mdAutoD') + '</span></span>' +
+      (PICKED===''?'<span class="mtag now">'+T('mdOn')+'</span>':'') +
+    '</button>';
+
+  list.forEach(c => {
+    const id = mid(c), left = coolLeft(c), locked = left > 0;
+    html += '<button class="mrow' + (PICKED===id?' on':'') + (locked?' dis':'') + '" ' +
+      'onclick="pickModel(\'' + id + '\')">' +
+      '<span class="mi2">' + (locked ? '🔒' : mIcon(c)) + '</span>' +
+      '<span class="mtx"><b>' + (c.label || c.model) + '</b><span>' +
+        (locked ? T('mdLocked').replace('{n}', NUM(left)) : mDesc(c)) +
+      '</span></span>' +
+      (locked ? '<span class="mtag wait">' + T('mdWait') + '</span>'
+              : PICKED===id ? '<span class="mtag now">' + T('mdOn') + '</span>'
+                            : '<span class="mtag free">' + T('mdFree') + '</span>') +
+    '</button>';
+  });
+  $('mdlist').innerHTML = html;
+}
+
+function pickModel(id){
+  /* روی مدل قفل‌شده نمی‌شود رفت */
+  if(id){
+    const c = (APP.CHAIN||[]).find(x => mid(x) === id);
+    if(c && coolLeft(c) > 0){ toast(T('mdLockedMsg')); sfx('tap'); return; }
+  }
+  PICKED = id;
+  try{ localStorage.setItem('picked', id); }catch(e){}
+  sfx('ok'); paintModel(); drawModels();
+  setTimeout(closeModels, 180);
+}
+
+/* نام مدل فعال روی دکمه نوار بالا */
+function paintModel(){
+  const b = $('mdlname'), d = $('mdldot');
+  if(!b) return;
+  if(!PICKED){ b.textContent = T('mdAuto'); if(d) d.className = 'dt'; return; }
+  const c = (APP.CHAIN||[]).find(x => mid(x) === PICKED);
+  if(!c){ PICKED = ''; b.textContent = T('mdAuto'); return; }
+  /* اگر مدل انتخابی قفل شد، خودکار برگرد به حالت خودکار */
+  if(coolLeft(c) > 0){
+    PICKED = ''; try{ localStorage.setItem('picked',''); }catch(e){}
+    b.textContent = T('mdAuto'); if(d) d.className = 'dt';
+    toast(T('mdFellBack').replace('{n}', c.label || c.model));
+    return;
+  }
+  b.textContent = (c.label || c.model).replace(/^Gemini\s*/,'');
+  if(d) d.className = 'dt';
+}
+
 /* ================= [جدید] منوی چت و تنظیمات گفتگو ================= */
 const LENS  = ['auto','short','medium','long'];
 const TONES = [['default','🙂'],['joyful','😄'],['friendly','😊'],['romantic','🥰'],
@@ -2366,6 +2501,14 @@ const I18N = {
     saved:'✓ ذخیره شد', exported:'✓ فایل ذخیره شد', failed:'انجام نشد', noChat:'گفتگویی وجود ندارد',
     confirmClearChat:'این گفتگو پاک شود؟',
     today:'امروز',
+    mdlTitle:'انتخاب مدل', mdlNote:'مدل‌هایی که سهمیه‌شان تمام شده تا آزادشدن قفل می‌مانند.',
+    mdAuto:'خودکار', mdAutoD:'بهترین مدل در دسترس — اگر یکی بخوابد خودکار سوییچ می‌کند',
+    mdOn:'فعال', mdFree:'رایگان', mdWait:'قفل',
+    mdLocked:'سهمیه تمام شد — حدود {n} دقیقه دیگر آزاد می‌شود',
+    mdLockedMsg:'این مدل فعلاً سهمیه‌اش تمام شده است.',
+    mdFellBack:'{n} قفل شد — به حالت خودکار برگشتیم.',
+    mdGemini:'قوی، چندزبانه، پشتیبانی از تصویر', mdGroq:'خیلی سریع، مناسب پاسخ کوتاه',
+    mdOR:'مدل‌های متن‌باز متنوع',
     allTools:'همه',
     proTitle:'نسخه Pro', proCode:'کد فعال‌سازی دارید؟',
     proCodeD:'اگر خرید کرده‌اید، کدی که دریافت کردید را اینجا وارد کنید.',
@@ -2419,6 +2562,14 @@ const I18N = {
     saved:'✓ Saved', exported:'✓ File saved', failed:'Failed', noChat:'No conversation yet',
     confirmClearChat:'Clear this conversation?',
     today:'Today',
+    mdlTitle:'Choose model', mdlNote:'Models that hit their quota stay locked until they reset.',
+    mdAuto:'Auto', mdAutoD:'Best available model — switches automatically if one goes down',
+    mdOn:'Active', mdFree:'Free', mdWait:'Locked',
+    mdLocked:'Quota reached — unlocks in about {n} min',
+    mdLockedMsg:'This model has run out of quota for now.',
+    mdFellBack:'{n} got locked — switched back to Auto.',
+    mdGemini:'Strong, multilingual, supports images', mdGroq:'Very fast, great for short replies',
+    mdOR:'Various open-source models',
     allTools:'All',
     proTitle:'Pro version', proCode:'Have an activation code?',
     proCodeD:'If you purchased, enter the code you received here.',
@@ -2472,6 +2623,14 @@ const I18N = {
     saved:'✓ تم الحفظ', exported:'✓ تم حفظ الملف', failed:'فشل', noChat:'لا توجد محادثة',
     confirmClearChat:'مسح هذه المحادثة؟',
     today:'اليوم',
+    mdlTitle:'اختيار النموذج', mdlNote:'النماذج التي استنفدت حصتها تبقى مقفلة حتى تتجدد.',
+    mdAuto:'تلقائي', mdAutoD:'أفضل نموذج متاح — يتبدّل تلقائياً عند تعطّل أحدها',
+    mdOn:'نشط', mdFree:'مجاني', mdWait:'مقفل',
+    mdLocked:'انتهت الحصة — يُفتح خلال {n} دقيقة تقريباً',
+    mdLockedMsg:'هذا النموذج استنفد حصته حالياً.',
+    mdFellBack:'تم قفل {n} — عدنا إلى الوضع التلقائي.',
+    mdGemini:'قوي ومتعدد اللغات ويدعم الصور', mdGroq:'سريع جداً ومناسب للردود القصيرة',
+    mdOR:'نماذج مفتوحة المصدر متنوعة',
     allTools:'الكل',
     proTitle:'النسخة Pro', proCode:'هل لديك رمز تفعيل؟',
     proCodeD:'إذا كنت قد اشتريت، أدخل الرمز الذي استلمته هنا.',
@@ -2525,6 +2684,14 @@ const I18N = {
     saved:'✓ Kaydedildi', exported:'✓ Dosya kaydedildi', failed:'Başarısız', noChat:'Henüz sohbet yok',
     confirmClearChat:'Bu sohbet temizlensin mi?',
     today:'Bugün',
+    mdlTitle:'Model seç', mdlNote:'Kotası dolan modeller yenilenene kadar kilitli kalır.',
+    mdAuto:'Otomatik', mdAutoD:'Mevcut en iyi model — biri çökerse otomatik geçer',
+    mdOn:'Etkin', mdFree:'Ücretsiz', mdWait:'Kilitli',
+    mdLocked:'Kota doldu — yaklaşık {n} dk sonra açılır',
+    mdLockedMsg:'Bu modelin kotası şu an dolmuş.',
+    mdFellBack:'{n} kilitlendi — Otomatik moda dönüldü.',
+    mdGemini:'Güçlü, çok dilli, görsel destekler', mdGroq:'Çok hızlı, kısa yanıtlar için ideal',
+    mdOR:'Çeşitli açık kaynak modeller',
     allTools:'Tümü',
     proTitle:'Pro sürüm', proCode:'Etkinleştirme kodunuz var mı?',
     proCodeD:'Satın aldıysanız, aldığınız kodu buraya girin.',
@@ -2847,6 +3014,7 @@ function applyLang(){
   document.documentElement.dir  = rtl ? 'rtl' : 'ltr';
   applyI18N();
   try{ buildHome(); }catch(e){}
+  try{ paintModel(); }catch(e){}
   try{ if(curTool) $('title').textContent = toolT(curTool); }catch(e){}
 }
 
@@ -3712,6 +3880,11 @@ function chainList(){
       if(c && (APP.PROXY || c.key || c.keyEnc)) out.push(Object.assign({}, c));
     });
   }
+  /* کاربر مدل مشخصی انتخاب کرده → همان اول صف، بقیه پشتیبان بمانند */
+  if(PICKED){
+    const i = out.findIndex(c => mid(c) === PICKED);
+    if(i > 0) out.unshift(out.splice(i, 1)[0]);
+  }
   /* سرویس تنظیمات کاربر/مالک همیشه به‌عنوان آخرین پشتیبان */
   if(cfg.apikey && !out.some(c => c.provider === cfg.provider && keyOf(c) === cfg.apikey)){
     out.push({provider:cfg.provider, key:cfg.apikey, model:cfg.model,
@@ -3890,7 +4063,10 @@ async function callAPI(){
       const m = String(err.message || '');
       console.warn('✕ ' + (c.label || c.provider) + ': ' + m);
       /* سهمیه تمام → تا ۳۰ دقیقه سراغش نرو */
-      if(/429|quota|rate|limit|exceed/i.test(m)) setCooling(c, 30);
+      if(/429|quota|rate|limit|exceed/i.test(m)){
+        setCooling(c, 30);
+        try{ paintModel(); if($('mdlsheet').classList.contains('on')) drawModels(); }catch(_){}
+      }
       /* خطاهای موقتی/سهمیه → سرویس بعدی. بقیه خطاها هم اگر سرویس دیگری هست امتحان می‌شود */
       if(!shouldFallback(m) && i === order.length - 1) throw err;
     }
@@ -4630,6 +4806,11 @@ initBanner();
 applyPro();
 paintCredit();
 buildPro();
+paintModel();
+/* هر دقیقه بررسی کن قفل مدلی باز شده یا نه */
+setInterval(() => {
+  try{ paintModel(); if($('mdlsheet').classList.contains('on')) drawModels(); }catch(e){}
+}, 60000);
 
 /* اگر مالک تنظیمات را قفل کرده، دکمه ⚙ را بردار */
 if(APP.LOCK_SETTINGS){
