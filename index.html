@@ -4842,6 +4842,26 @@ paintSet();
 syncCredit();
 document.addEventListener('visibilitychange', () => { if(!document.hidden) syncCredit(); });
 
+/* ---- شبکه ایمنی: اگر اپ رندر نشد، سرویس‌ورکر مقصر را پاک کن ---- */
+setTimeout(function(){
+  try{
+    var painted = document.querySelector('.top') && document.body && document.body.children.length > 2;
+    var hasText = (document.body ? (document.body.innerText||'').trim().length : 0) > 0;
+    if(painted && hasText) return;               /* سالم است */
+    if(!('serviceWorker' in navigator)) return;
+    /* صفحه سفید → کش و SW را پاک کن و یک بار تازه شو */
+    if(sessionStorage.getItem('_rescued')) return;   /* فقط یک بار */
+    sessionStorage.setItem('_rescued','1');
+    navigator.serviceWorker.getRegistrations().then(function(rs){
+      return Promise.all(rs.map(function(r){ return r.unregister(); }));
+    }).then(function(){
+      return caches.keys().then(function(ks){
+        return Promise.all(ks.map(function(k){ return caches.delete(k); }));
+      });
+    }).then(function(){ location.reload(); }).catch(function(){ location.reload(); });
+  }catch(_){}
+}, 5000);
+
 if('serviceWorker' in navigator){
   /* وقتی نسخه جدید فعال شد، صفحه یک‌بار خودکار تازه شود */
   let _reloaded = false;
