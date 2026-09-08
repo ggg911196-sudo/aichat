@@ -1924,7 +1924,7 @@ function paintCredit(){
   const pct  = Math.max(0, Math.min(100, left / cap * 100));
   el.style.display = 'flex';
   el.classList.toggle('low', pct < 20);
-  el.querySelector('b').textContent = left.toLocaleString('fa-IR');
+  el.querySelector('b').textContent = NUM(left);
   el.querySelector('i').style.width = pct + '%';
 }
 
@@ -1933,10 +1933,10 @@ function noCredit(need){
   const d = document.createElement('div');
   d.className = 'msg quota';
   d.innerHTML = '⏳ کردیت امروز کافی نیست.<br>' +
-    'این کار <b>' + need.toLocaleString('fa-IR') + ' کردیت</b> لازم دارد و ' +
-    'شما <b>' + creditLeft().toLocaleString('fa-IR') + '</b> کردیت دارید.<br>' +
+    'این کار <b>' + NUM(need) + ' کردیت</b> لازم دارد و ' +
+    'شما <b>' + NUM(creditLeft()) + '</b> کردیت دارید.<br>' +
     '<span style="opacity:.8;font-size:12px">فردا ' +
-    dailyCap().toLocaleString('fa-IR') + ' کردیت تازه می‌گیرید.</span>' +
+    NUM(dailyCap()) + ' کردیت تازه می‌گیرید.</span>' +
     '<button onclick="go(\'pro\')">دریافت کردیت نامحدود ✦</button>';
   chat.appendChild(d);
   chat.scrollTop = chat.scrollHeight;
@@ -1956,8 +1956,8 @@ function openCredit(){
   const cap = dailyCap();
   $('crbody').innerHTML =
     (cap
-      ? '<div class="crbig"><b>' + creditLeft().toLocaleString('fa-IR') + '</b>' +
-        '<span>از ' + cap.toLocaleString('fa-IR') + ' کردیت امروز</span></div>'
+      ? '<div class="crbig"><b>' + NUM(creditLeft()) + '</b>' +
+        '<span>از ' + NUM(cap) + ' کردیت امروز</span></div>'
       : '<div class="crbig"><b>∞</b><span>کردیت نامحدود</span></div>') +
     '<p class="crnote">کردیت هر روز نیمه‌شب دوباره پر می‌شود.</p>' +
     costTable();
@@ -1984,7 +1984,7 @@ function buildPro(){
     const el = document.createElement('div');
     el.className = 'prostatus';
     el.innerHTML = '<b>'+T('proActive')+'</b><span>' +
-                   proDaysLeft() + ' روز باقی مانده</span>';
+                   T('daysLeft').replace('{n}', NUM(proDaysLeft())) + '</span>';
     $('s-pro').insertBefore(el, $('plans'));
   }
 
@@ -2134,6 +2134,7 @@ const I18N = {
     hello:'سلام! 👋 هر سوالی داری بپرس.', msgs:'پیام',
     bubDefault:'پیش‌فرض', bubSoft:'کاملاً گرد', bubSquare:'گوشه‌دار', bubLine:'خطی',
     addTool:'افزودن', startChat:'شروع چت', popular:'ابزارهای پرطرفدار', start:'شروع', toolsWord:'ابزار',
+    hiTool:'سلام! من {n} هستم — {d} چطور می‌توانم کمکت کنم؟', creditLeftLine:'{n} کردیت امروز باقی مانده', daysLeft:'{n} روز باقی مانده',
     allTools:'همه',
     proTitle:'نسخه Pro', proCode:'کد فعال‌سازی دارید؟',
     proCodeD:'اگر خرید کرده‌اید، کدی که دریافت کردید را اینجا وارد کنید.',
@@ -2177,6 +2178,7 @@ const I18N = {
     hello:'Hi! 👋 Ask me anything.', msgs:'messages',
     bubDefault:'Default', bubSoft:'Rounded', bubSquare:'Square', bubLine:'Outline',
     addTool:'Add', startChat:'Start chat', popular:'Popular tools', start:'Start', toolsWord:'tools',
+    hiTool:'Hi! I am your {n} — {d} How can I help you?', creditLeftLine:'{n} credits left today', daysLeft:'{n} days left',
     allTools:'All',
     proTitle:'Pro version', proCode:'Have an activation code?',
     proCodeD:'If you purchased, enter the code you received here.',
@@ -2220,6 +2222,7 @@ const I18N = {
     hello:'مرحباً! 👋 اسألني أي شيء.', msgs:'رسالة',
     bubDefault:'افتراضي', bubSoft:'دائري', bubSquare:'مربع', bubLine:'خطي',
     addTool:'إضافة', startChat:'ابدأ الدردشة', popular:'الأدوات الشائعة', start:'ابدأ', toolsWord:'أداة',
+    hiTool:'مرحباً! أنا {n} — {d} كيف يمكنني مساعدتك؟', creditLeftLine:'{n} رصيد متبقٍ اليوم', daysLeft:'{n} يوم متبقٍ',
     allTools:'الكل',
     proTitle:'النسخة Pro', proCode:'هل لديك رمز تفعيل؟',
     proCodeD:'إذا كنت قد اشتريت، أدخل الرمز الذي استلمته هنا.',
@@ -2263,6 +2266,7 @@ const I18N = {
     hello:'Merhaba! 👋 Bana her şeyi sorabilirsin.', msgs:'mesaj',
     bubDefault:'Varsayılan', bubSoft:'Yuvarlak', bubSquare:'Köşeli', bubLine:'Çizgili',
     addTool:'Ekle', startChat:'Sohbeti başlat', popular:'Popüler araçlar', start:'Başla', toolsWord:'araç',
+    hiTool:'Merhaba! Ben {n} — {d} Sana nasıl yardımcı olabilirim?', creditLeftLine:'Bugün {n} kredi kaldı', daysLeft:'{n} gün kaldı',
     allTools:'Tümü',
     proTitle:'Pro sürüm', proCode:'Etkinleştirme kodunuz var mı?',
     proCodeD:'Satın aldıysanız, aldığınız kodu buraya girin.',
@@ -2522,6 +2526,13 @@ const CAT_I18N = {
 };
 
 /* نام ابزار به زبان فعلی */
+function NUM(v){ try{ return Number(v).toLocaleString(USET.lang==='fa'?'fa-IR':(USET.lang==='ar'?'ar-EG':'en-US')); }catch(e){ return String(v); } }
+/* پیام خوش‌آمد ابزار به زبان فعال */
+function toolHi(t){
+  if(!t) return T('hello');
+  if(USET.lang==='fa') return t.hi;
+  return T('hiTool').replace('{n}', toolT(t)).replace('{d}', toolD(t));
+}
 function toolT(t){ const m=(TOOL_I18N[USET.lang]||{})[t.id]; return m?m[0]:t.t; }
 function toolD(t){ const m=(TOOL_I18N[USET.lang]||{})[t.id]; return m?m[1]:t.d; }
 function catT(c){ return (CAT_I18N[USET.lang]||{})[c] || c; }
@@ -2949,10 +2960,10 @@ function welcome(){
       '<b>۳.</b> کلید <code>AIza...</code> را کپی کن<br>' +
       '<b>۴.</b> دکمه ⚙ بالا ← پیست کن ← 🔍 تست ← ذخیره<br><br>بدون کارت بانکی، رایگان.');
   } else {
-    let g = curTool ? curTool.hi : T('hello');
+    let g = toolHi(curTool);
     if(dailyCap()){
       g += '<br><span style="font-size:12px;opacity:.75">' +
-           creditLeft().toLocaleString('fa-IR') + ' کردیت امروز باقی مانده</span>';
+           T('creditLeftLine').replace('{n}', NUM(creditLeft())) + '</span>';
     }
     addHint(g);
   }
@@ -3287,7 +3298,7 @@ function globalOK(){
 function validInput(t){
   if(t.length > (APP.MAX_CHARS || 4000))
     return {ok:false, msg:'پیام خیلی طولانی است. حداکثر ' +
-      (APP.MAX_CHARS||4000).toLocaleString('fa-IR') + ' کاراکتر.'};
+      NUM((APP.MAX_CHARS||4000)) + ' کاراکتر.'};
   /* تلاش برای تزریق دستور سیستمی */
   if(/(\bignore (all )?(previous|prior|above)\b|\bsystem prompt\b|\byou are now\b|دستور(ات)? قبلی را نادیده)/i.test(t)
      && t.length < 200){
@@ -3747,8 +3758,8 @@ async function pickPdf(el){
 
   const need = pdfCost(f.size);
   if(!canSpend(need)){
-    alert('این فایل ' + need.toLocaleString('fa-IR') + ' کردیت لازم دارد، ولی شما ' +
-          creditLeft().toLocaleString('fa-IR') + ' کردیت دارید.');
+    alert('این فایل ' + NUM(need) + ' کردیت لازم دارد، ولی شما ' +
+          NUM(creditLeft()) + ' کردیت دارید.');
     return;
   }
 
@@ -3759,7 +3770,7 @@ async function pickPdf(el){
   box.style.display = 'block';
   box.innerHTML = '<div class="pdfchip"><span class="pi">PDF</span>' +
     '<span class="pn"></span><span class="pc">' + mb + ' مگابایت · ' +
-    need.toLocaleString('fa-IR') + ' کردیت</span>' +
+    NUM(need) + ' کردیت</span>' +
     '<button class="px" onclick="clearPdf()" aria-label="حذف">×</button></div>';
   box.querySelector('.pn').textContent = f.name;
 
