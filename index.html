@@ -93,6 +93,50 @@
   .iconbtn:active{background:var(--btn2);transform:scale(.9)}
   .back{display:none}
 
+
+  /* ===== [جدید] منوی سه‌نقطه چت ===== */
+  .dots{display:none}
+  body.in-chat .top .dots{display:grid}
+  #cmenu{position:fixed;inset:0;z-index:70;display:none}
+  #cmenu.on{display:block}
+  #cmenu .bg{position:absolute;inset:0;background:rgba(0,0,0,.35)}
+  #cmenu .mn{position:absolute;top:calc(52px + env(safe-area-inset-top));
+    inset-inline-end:10px;background:var(--card2);border:1px solid var(--line);
+    border-radius:16px;overflow:hidden;min-width:190px;
+    box-shadow:0 14px 40px rgba(0,0,0,.45);animation:mpop .16s ease}
+  @keyframes mpop{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1}}
+  #cmenu button{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;
+    background:none;border:none;border-bottom:1px solid var(--line);color:var(--fg);
+    font:inherit;font-size:14.5px;cursor:pointer;text-align:start}
+  #cmenu button:last-child{border-bottom:none}
+  #cmenu button:active{background:var(--btn2)}
+  #cmenu button svg{width:19px;height:19px;flex:0 0 auto;opacity:.85}
+  #cmenu button.danger{color:#ff6b6b}
+
+  /* ===== [جدید] تنظیمات گفتگو ===== */
+  #csheet{position:fixed;inset:0;z-index:75;display:none}
+  #csheet.on{display:block}
+  #csheet .bg{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+  #csheet .pan{position:absolute;inset-inline:0;bottom:0;background:var(--sheet);
+    border-radius:24px 24px 0 0;padding:18px 18px calc(20px + env(safe-area-inset-bottom));
+    max-height:88vh;overflow-y:auto;animation:cup .22s cubic-bezier(.2,.9,.3,1)}
+  @keyframes cup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  #csheet .hd{display:flex;align-items:center;margin-bottom:6px}
+  #csheet .hd h3{flex:1;margin:0;font-size:17px;font-weight:800;text-align:center}
+  #csheet .hd button{background:none;border:none;color:var(--dim);font-size:24px;
+    cursor:pointer;width:34px;height:34px;line-height:1}
+  #csheet h4{margin:20px 0 10px;font-size:14.5px;font-weight:700;color:var(--fg2)}
+  .opts{display:flex;flex-wrap:wrap;gap:9px}
+  .opt{background:var(--card2);border:1.5px solid transparent;border-radius:22px;
+    padding:10px 18px;font:inherit;font-size:13.5px;color:var(--fg);cursor:pointer;
+    display:flex;align-items:center;gap:6px;transition:transform .12s}
+  .opt:active{transform:scale(.94)}
+  .opt.on{background:var(--accent);color:var(--onacc);font-weight:700}
+  .savebtn{width:100%;margin-top:26px;padding:16px;border-radius:16px;border:none;
+    background:var(--accent);color:var(--onacc);font:inherit;font-weight:800;
+    font-size:15.5px;cursor:pointer}
+  .savebtn:active{transform:scale(.98)}
+
   /* ===== بدنه ===== */
   main{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;position:relative}
   .screen{display:none;padding:16px;padding-bottom:26px}
@@ -760,6 +804,7 @@
     </svg>
   </button>
   <button class="iconbtn" id="setBtn" onclick="go('set')" aria-label="تنظیمات کاربر"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5v.2a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1.1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1h.2a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></button>
+  <button class="iconbtn dots" onclick="openCMenu()" aria-label="گزینه‌ها"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></button>
   <button class="sparkbtn" onclick="go('pro')" aria-label="نسخه Pro">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
       <path d="M12 2.6l1.9 5.3 5.5 1.9-5.5 1.9L12 17l-1.9-5.3-5.5-1.9 5.5-1.9z"/>
@@ -1005,6 +1050,31 @@
     <h3>⚡ کردیت شما</h3>
     <div id="crbody"></div>
     <div class="row"><button class="ghost" onclick="closeCredit()" data-i18n="close">بستن</button></div>
+  </div>
+</div>
+
+
+<div id="cmenu" onclick="if(event.target.classList.contains('bg'))closeCMenu()">
+  <div class="bg"></div>
+  <div class="mn">
+    <button onclick="exportChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M8 8l4-4 4 4"/><path d="M4 16v2.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V16"/></svg><span data-i18n="mExport">خروجی گرفتن</span></button>
+    <button onclick="shareChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg><span data-i18n="mShare">اشتراک‌گذاری</span></button>
+    <button onclick="openCSet()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg><span data-i18n="mCSet">تنظیمات گفتگو</span></button>
+    <button class="danger" onclick="clearChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"/></svg><span data-i18n="mClear">پاک‌کردن گفتگو</span></button>
+  </div>
+</div>
+
+<div id="csheet" onclick="if(event.target.classList.contains('bg'))closeCSet()">
+  <div class="bg"></div>
+  <div class="pan">
+    <div class="hd"><h3 data-i18n="mCSet">تنظیمات گفتگو</h3><button onclick="closeCSet()">&times;</button></div>
+    <h4 data-i18n="cFollow">سوالات پیشنهادی</h4>
+    <div class="opts" id="oFollow"></div>
+    <h4 data-i18n="cLen">طول پاسخ</h4>
+    <div class="opts" id="oLen"></div>
+    <h4 data-i18n="cTone">لحن پاسخ</h4>
+    <div class="opts" id="oTone"></div>
+    <button class="savebtn" onclick="saveCSet()" data-i18n="save">ذخیره</button>
   </div>
 </div>
 
@@ -1773,6 +1843,132 @@ function buildStore(){
   $('tcount2').textContent = TOOLS.length + ' ' + T('toolsWord');
 }
 
+
+
+/* پیام کوتاه شناور */
+let _tt;
+function toast(msg){
+  let el = document.getElementById('toast');
+  if(!el){
+    el = document.createElement('div'); el.id = 'toast';
+    el.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);' +
+      'bottom:calc(96px + env(safe-area-inset-bottom));background:var(--card2);' +
+      'color:var(--fg);border:1px solid var(--line);border-radius:14px;' +
+      'padding:12px 20px;font-size:14px;z-index:200;opacity:0;' +
+      'transition:opacity .22s;pointer-events:none;box-shadow:0 8px 26px rgba(0,0,0,.4);' +
+      'max-width:86vw;text-align:center';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  requestAnimationFrame(() => { el.style.opacity = '1'; });
+  clearTimeout(_tt);
+  _tt = setTimeout(() => { el.style.opacity = '0'; }, 1900);
+}
+
+/* ================= [جدید] منوی چت و تنظیمات گفتگو ================= */
+const LENS  = ['auto','short','medium','long'];
+const TONES = [['default','🙂'],['joyful','😄'],['friendly','😊'],['romantic','🥰'],
+               ['worried','😟'],['optimistic','😁'],['professional','🧐'],
+               ['critical','🤔'],['surprised','🥳']];
+
+let CSET = (() => {
+  try{ return Object.assign({follow:1, len:'auto', tone:'default'},
+       JSON.parse(localStorage.getItem('cset')||'{}')); }
+  catch(e){ return {follow:1, len:'auto', tone:'default'}; }
+})();
+function saveCSetLS(){ try{ localStorage.setItem('cset', JSON.stringify(CSET)); }catch(e){} }
+
+function openCMenu(){ sfx('tap'); $('cmenu').classList.add('on'); }
+function closeCMenu(){ $('cmenu').classList.remove('on'); }
+
+function openCSet(){
+  closeCMenu(); sfx('tap');
+  _tmp = Object.assign({}, CSET);
+  drawCSet();
+  $('csheet').classList.add('on');
+}
+function closeCSet(){ $('csheet').classList.remove('on'); }
+
+let _tmp = {};
+function drawCSet(){
+  $('oFollow').innerHTML =
+    '<button class="opt' + (_tmp.follow?' on':'') + '" onclick="pickC(\'follow\',1)">' + T('on') + '</button>' +
+    '<button class="opt' + (!_tmp.follow?' on':'') + '" onclick="pickC(\'follow\',0)">' + T('off') + '</button>';
+  $('oLen').innerHTML = LENS.map(k =>
+    '<button class="opt' + (_tmp.len===k?' on':'') + '" onclick="pickC(\'len\',\'' + k + '\')">' +
+    T('len_' + k) + '</button>').join('');
+  $('oTone').innerHTML = TONES.map(([k,e]) =>
+    '<button class="opt' + (_tmp.tone===k?' on':'') + '" onclick="pickC(\'tone\',\'' + k + '\')">' +
+    e + ' ' + T('tone_' + k) + '</button>').join('');
+}
+function pickC(k,v){ _tmp[k]=v; sfx('tap'); drawCSet(); }
+function saveCSet(){
+  CSET = Object.assign({}, _tmp); saveCSetLS(); sfx('ok');
+  closeCSet(); toast(T('saved'));
+}
+
+/* دستور اضافه بر اساس تنظیمات گفتگو */
+function csetRules(){
+  const L = {auto:'', short:'\nپاسخ را بسیار کوتاه بده، حداکثر ۲ جمله.',
+    medium:'\nپاسخ را در حد یک پاراگراف متوسط بده.',
+    long:'\nپاسخ را کامل و مفصل با جزئیات بده.'}[CSET.len] || '';
+  const O = {default:'', joyful:'\nبا لحنی شاد و پرانرژی بنویس.',
+    friendly:'\nبا لحنی صمیمی و دوستانه بنویس.',
+    romantic:'\nبا لحنی گرم و احساسی بنویس.',
+    worried:'\nبا لحنی محتاط بنویس و خطرها را یادآوری کن.',
+    optimistic:'\nبا لحنی مثبت و امیدبخش بنویس.',
+    professional:'\nبا لحنی رسمی و حرفه‌ای بنویس.',
+    critical:'\nنگاه نقادانه داشته باش و نقاط ضعف را هم بگو.',
+    surprised:'\nبا لحنی هیجان‌زده و پرشور بنویس.'}[CSET.tone] || '';
+  return L + O;
+}
+
+/* --- خروجی گرفتن --- */
+function chatText(){
+  const t = curTool ? toolT(curTool) : T('chat');
+  let out = t + '\n' + new Date().toLocaleString() + '\n\n';
+  history.forEach(m => {
+    const c = Array.isArray(m.content)
+      ? m.content.map(x => x.text || '[تصویر]').join(' ')
+      : String(m.content || '');
+    if(m.role === 'system') return;
+    out += (m.role === 'user' ? '👤 ' : '🤖 ') + c + '\n\n';
+  });
+  return out.trim();
+}
+function exportChat(){
+  closeCMenu();
+  if(!history.length){ toast(T('noChat')); return; }
+  try{
+    const b = new Blob([chatText()], {type:'text/plain;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = 'chat-' + Date.now() + '.txt';
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+    toast(T('exported'));
+  }catch(e){ toast(T('failed')); }
+}
+async function shareChat(){
+  closeCMenu();
+  if(!history.length){ toast(T('noChat')); return; }
+  const txt = chatText();
+  try{
+    if(navigator.share){ await navigator.share({title:'Ai Chat', text:txt}); return; }
+    await navigator.clipboard.writeText(txt); toast(T('copied'));
+  }catch(e){}
+}
+function clearChat(){
+  closeCMenu();
+  if(!history.length){ toast(T('noChat')); return; }
+  if(!confirm(T('confirmClearChat'))) return;
+  history = [];
+  const keep = chat.querySelector('.toolbar2');
+  chat.innerHTML = ''; if(keep) chat.appendChild(keep);
+  try{ saveHist(); }catch(e){}
+  welcome(); sfx('ok');
+}
+
 /* ================= سیستم اشتراک Pro ================= */
 function lic(){ try{ return JSON.parse(localStorage.getItem('lic')||'null'); }catch(e){ return null; } }
 function isPro(){
@@ -2135,6 +2331,14 @@ const I18N = {
     bubDefault:'پیش‌فرض', bubSoft:'کاملاً گرد', bubSquare:'گوشه‌دار', bubLine:'خطی',
     addTool:'افزودن', startChat:'شروع چت', popular:'ابزارهای پرطرفدار', start:'شروع', toolsWord:'ابزار',
     hiTool:'سلام! من {n} هستم — {d} چطور می‌توانم کمکت کنم؟', creditLeftLine:'{n} کردیت امروز باقی مانده', daysLeft:'{n} روز باقی مانده',
+    mExport:'خروجی گرفتن', mShare:'اشتراک‌گذاری', mCSet:'تنظیمات گفتگو', mClear:'پاک‌کردن گفتگو',
+    cFollow:'سوالات پیشنهادی', cLen:'طول پاسخ', cTone:'لحن پاسخ', on:'روشن', off:'خاموش',
+    len_auto:'خودکار', len_short:'کوتاه', len_medium:'متوسط', len_long:'بلند',
+    tone_default:'پیش‌فرض', tone_joyful:'شاد', tone_friendly:'دوستانه', tone_romantic:'عاشقانه',
+    tone_worried:'محتاط', tone_optimistic:'خوش‌بین', tone_professional:'حرفه‌ای',
+    tone_critical:'نقادانه', tone_surprised:'هیجان‌زده',
+    saved:'✓ ذخیره شد', exported:'✓ فایل ذخیره شد', failed:'انجام نشد', noChat:'گفتگویی وجود ندارد',
+    confirmClearChat:'این گفتگو پاک شود؟',
     allTools:'همه',
     proTitle:'نسخه Pro', proCode:'کد فعال‌سازی دارید؟',
     proCodeD:'اگر خرید کرده‌اید، کدی که دریافت کردید را اینجا وارد کنید.',
@@ -2179,6 +2383,14 @@ const I18N = {
     bubDefault:'Default', bubSoft:'Rounded', bubSquare:'Square', bubLine:'Outline',
     addTool:'Add', startChat:'Start chat', popular:'Popular tools', start:'Start', toolsWord:'tools',
     hiTool:'Hi! I am your {n} — {d} How can I help you?', creditLeftLine:'{n} credits left today', daysLeft:'{n} days left',
+    mExport:'Export', mShare:'Share', mCSet:'Chat settings', mClear:'Clear chat',
+    cFollow:'Follow-up questions', cLen:'Response length', cTone:'Response tone', on:'On', off:'Off',
+    len_auto:'Auto', len_short:'Short', len_medium:'Medium', len_long:'Long',
+    tone_default:'Default', tone_joyful:'Joyful', tone_friendly:'Friendly', tone_romantic:'Romantic',
+    tone_worried:'Worried', tone_optimistic:'Optimistic', tone_professional:'Professional',
+    tone_critical:'Critical', tone_surprised:'Surprised',
+    saved:'✓ Saved', exported:'✓ File saved', failed:'Failed', noChat:'No conversation yet',
+    confirmClearChat:'Clear this conversation?',
     allTools:'All',
     proTitle:'Pro version', proCode:'Have an activation code?',
     proCodeD:'If you purchased, enter the code you received here.',
@@ -2223,6 +2435,14 @@ const I18N = {
     bubDefault:'افتراضي', bubSoft:'دائري', bubSquare:'مربع', bubLine:'خطي',
     addTool:'إضافة', startChat:'ابدأ الدردشة', popular:'الأدوات الشائعة', start:'ابدأ', toolsWord:'أداة',
     hiTool:'مرحباً! أنا {n} — {d} كيف يمكنني مساعدتك؟', creditLeftLine:'{n} رصيد متبقٍ اليوم', daysLeft:'{n} يوم متبقٍ',
+    mExport:'تصدير', mShare:'مشاركة', mCSet:'إعدادات المحادثة', mClear:'مسح المحادثة',
+    cFollow:'أسئلة مقترحة', cLen:'طول الرد', cTone:'نبرة الرد', on:'تشغيل', off:'إيقاف',
+    len_auto:'تلقائي', len_short:'قصير', len_medium:'متوسط', len_long:'طويل',
+    tone_default:'افتراضي', tone_joyful:'مرح', tone_friendly:'ودود', tone_romantic:'رومانسي',
+    tone_worried:'حذر', tone_optimistic:'متفائل', tone_professional:'احترافي',
+    tone_critical:'نقدي', tone_surprised:'متحمس',
+    saved:'✓ تم الحفظ', exported:'✓ تم حفظ الملف', failed:'فشل', noChat:'لا توجد محادثة',
+    confirmClearChat:'مسح هذه المحادثة؟',
     allTools:'الكل',
     proTitle:'النسخة Pro', proCode:'هل لديك رمز تفعيل؟',
     proCodeD:'إذا كنت قد اشتريت، أدخل الرمز الذي استلمته هنا.',
@@ -2267,6 +2487,14 @@ const I18N = {
     bubDefault:'Varsayılan', bubSoft:'Yuvarlak', bubSquare:'Köşeli', bubLine:'Çizgili',
     addTool:'Ekle', startChat:'Sohbeti başlat', popular:'Popüler araçlar', start:'Başla', toolsWord:'araç',
     hiTool:'Merhaba! Ben {n} — {d} Sana nasıl yardımcı olabilirim?', creditLeftLine:'Bugün {n} kredi kaldı', daysLeft:'{n} gün kaldı',
+    mExport:'Dışa aktar', mShare:'Paylaş', mCSet:'Sohbet ayarları', mClear:'Sohbeti temizle',
+    cFollow:'Önerilen sorular', cLen:'Yanıt uzunluğu', cTone:'Yanıt tonu', on:'Açık', off:'Kapalı',
+    len_auto:'Otomatik', len_short:'Kısa', len_medium:'Orta', len_long:'Uzun',
+    tone_default:'Varsayılan', tone_joyful:'Neşeli', tone_friendly:'Samimi', tone_romantic:'Romantik',
+    tone_worried:'Endişeli', tone_optimistic:'İyimser', tone_professional:'Profesyonel',
+    tone_critical:'Eleştirel', tone_surprised:'Heyecanlı',
+    saved:'✓ Kaydedildi', exported:'✓ Dosya kaydedildi', failed:'Başarısız', noChat:'Henüz sohbet yok',
+    confirmClearChat:'Bu sohbet temizlensin mi?',
     allTools:'Tümü',
     proTitle:'Pro sürüm', proCode:'Etkinleştirme kodunuz var mı?',
     proCodeD:'Satın aldıysanız, aldığınız kodu buraya girin.',
@@ -3509,7 +3737,7 @@ let lastProvider = '';
 
 async function callAPI(){
   const sys = (curTool ? curTool.sys + '\n' + cfg.sysmsg : cfg.sysmsg)
-              + SMART_RULES + '\n' + langInstruction();
+              + SMART_RULES + csetRules() + '\n' + langInstruction();
   const hasImg = history.some(m => Array.isArray(m.content)) ||
                  !!(curTool && curTool.id === 'vision');
 
@@ -3626,6 +3854,7 @@ async function regenAnswer(){
 /* ===== سوالات پیشنهادی بعدی ===== */
 async function suggest(answer){
   const old = chat.querySelector('.sugg'); if(old) old.remove();
+  if(!CSET.follow) return;
   if(!READY()) return;
 
   /* از پروکسی استفاده کن (کلید محلی لازم نیست) */
